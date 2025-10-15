@@ -1,12 +1,36 @@
 import type { DerivativeFunc } from '@antdv-next/cssinjs'
 import type { CSSProperties, InjectionKey, Ref } from 'vue'
+import type { SpaceProps } from '../space'
 import type { AliasToken, MapToken, OverrideToken, SeedToken } from '../theme/interface'
 import type { RenderEmptyHandler } from './defaultRenderEmpty.tsx'
-import { inject, provide, ref } from 'vue'
+import { computed, inject, provide, ref } from 'vue'
 
 export const defaultPrefixCls = 'ant'
 export const defaultIconPrefixCls = 'anticon'
+const EMPTY_OBJECT = {}
 
+type GetClassNamesOrEmptyObject<Config extends { classes?: any }> = Config extends {
+  classes?: infer ClassNames
+}
+  ? ClassNames
+  : object
+
+type GetStylesOrEmptyObject<Config extends { styles?: any }> = Config extends {
+  styles?: infer Styles
+}
+  ? Styles
+  : object
+
+type ComponentReturnType<T extends keyof ConfigComponentProps> = Omit<
+  NonNullable<ConfigComponentProps[T]>,
+    'classes' | 'styles'
+> & {
+  classes: GetClassNamesOrEmptyObject<NonNullable<ConfigComponentProps[T]>>
+  styles: GetStylesOrEmptyObject<NonNullable<ConfigComponentProps[T]>>
+  getPrefixCls: ConfigConsumerProps['getPrefixCls']
+  direction: ConfigConsumerProps['direction']
+  getPopupContainer: ConfigConsumerProps['getPopupContainer']
+}
 export interface Theme {
   primaryColor?: string
   infoColor?: string
@@ -113,8 +137,10 @@ export interface WaveConfig {
   // showEffect?: ShowWaveEffect;
 }
 
-export interface ConfigComponentProps {
+export type SpaceConfig = ComponentStyleConfig & Pick<SpaceProps, 'size' | 'classes' | 'styles'>
 
+export interface ConfigComponentProps {
+  space?: SpaceConfig
 }
 
 export interface ConfigConsumerProps extends ConfigComponentProps {
@@ -160,4 +186,29 @@ export function useConfig() {
     getPrefixCls: defaultGetPrefixCls,
     iconPrefixCls: defaultIconPrefixCls,
   }))
+}
+
+/**
+ * Get ConfigProvider configured component props.
+ * This help to reduce bundle size for saving `?.` operator.
+ * Do not use as `useMemo` deps since we do not cache the object here.
+ *
+ * NOTE: not refactor this with `useMemo` since memo will cost another memory space,
+ * which will waste both compare calculation & memory.
+ */
+export function useComponentConfig<T extends keyof ConfigComponentProps>(propName: T) {
+  const context = useConfig()
+  return computed(() => {
+    const { getPrefixCls, direction, getPopupContainer } = context.value
+    const propValue: ConfigConsumerProps[T] = context.value[propName]
+
+    return {
+      classes: EMPTY_OBJECT,
+      styles: EMPTY_OBJECT,
+      ...propValue,
+      getPrefixCls,
+      direction,
+      getPopupContainer,
+    } as ComponentReturnType<T>
+  })
 }

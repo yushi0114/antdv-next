@@ -29,7 +29,7 @@ const Item = defineComponent<ItemProps, Record<string, any>, string, SlotsType<I
           <div class={className} {...attrs}>
             {children}
           </div>
-          {index < latestIndex && split.length && <span class={`${className}-split`}>{split}</span>}
+          {index < latestIndex && !!split.length && <span class={`${className}-split`}>{split}</span>}
         </>
       )
     }
