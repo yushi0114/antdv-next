@@ -34,8 +34,9 @@ const sizeClassNameMap: Record<string, string> = { small: 'sm', middle: 'md' }
 
 const defaultProps = {
   orientation: 'center',
-  variant: 'dashed',
-  mergedOrientation: undefined,
+  variant: 'solid',
+  type: 'horizontal',
+  orientationMargin: undefined,
 } as any
 const Divider = defineComponent<DividerProps>(
   (props = defaultProps, { slots, attrs }) => {
@@ -56,8 +57,8 @@ const Divider = defineComponent<DividerProps>(
       return orientation
     })
 
-    const hasMarginStart = computed(() => mergedOrientation.value === 'start' && mergedOrientation.value != null)
-    const hasMarginEnd = computed(() => mergedOrientation.value === 'end' && mergedOrientation.value != null)
+    const hasMarginStart = computed(() => mergedOrientation.value === 'start' && props.orientationMargin != null)
+    const hasMarginEnd = computed(() => mergedOrientation.value === 'end' && props.orientationMargin != null)
 
     const memoizedOrientationMargin = computed(() => {
       const orientationMargin = props.orientationMargin

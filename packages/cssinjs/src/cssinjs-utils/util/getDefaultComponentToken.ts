@@ -1,6 +1,6 @@
 import type { TokenType } from '../../theme'
 import type { GlobalToken, TokenMap, TokenMapKey } from '../interface'
-import type { GetDefaultToken, GetDefaultTokenFn } from './genStyleUtils'
+import type { GetDefaultToken, GetDefaultTokenFn } from './genStyleUtils.ts'
 import { merge as mergeToken } from './statistic'
 
 function getDefaultComponentToken<

@@ -41,10 +41,11 @@ export const { genComponentStyleHook, genStyleHooks, genSubStyleComponent } = ge
   },
   getResetStyles: (token, config) => {
     const linkStyle = genLinkStyle(token)
+    const { prefix } = config ?? {}
     return [
       linkStyle,
       { '&': linkStyle },
-      genIconStyle(config?.prefix?.iconPrefixCls ?? defaultIconPrefixCls),
+      genIconStyle(prefix?.value?.iconPrefixCls ?? defaultIconPrefixCls),
     ]
   },
   getCommonStyle: genCommonStyle,

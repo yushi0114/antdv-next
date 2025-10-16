@@ -9,8 +9,6 @@ export type {
   UseComponentStyleResult,
 } from './interface'
 
-export { default as genStyleUtils } from './util/genStyleUtils'
-
 export type {
   CSSUtil,
   CSSVarRegisterProps,
@@ -23,7 +21,9 @@ export type {
   StyleInfo,
   SubStyleComponentProps,
   TokenWithCommonCls,
-} from './util/genStyleUtils'
+} from './util/genStyleUtils.ts'
+
+export { default as genStyleUtils } from './util/genStyleUtils.ts'
 
 export {
   merge as mergeToken,
