@@ -1,5 +1,5 @@
 import type { VNodeChild } from 'vue'
-import type { AnyObject } from './type.ts'
+import type { AnyObject, VueNode } from './type.ts'
 import { isFragment } from '@v-c/util/dist/Children/isFragment'
 import { cloneVNode, isVNode } from 'vue'
 
@@ -18,4 +18,11 @@ export function replaceElement(element: VNodeChild, replacement: VNodeChild, pro
 
 export function cloneElement(element: VNodeChild, props?: RenderProps) {
   return replaceElement(element, element, props)
+}
+
+export function getVNode(node: VueNode) {
+  if (typeof node === 'function') {
+    return node?.()
+  }
+  return node
 }

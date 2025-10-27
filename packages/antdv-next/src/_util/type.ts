@@ -1,10 +1,10 @@
-import type { VNodeChild } from 'vue'
+import type { VNode, VNodeChild } from 'vue'
 
 export type AnyObject = Record<PropertyKey, any>
 
 export type RenderNodeFn<Args extends any[] = any[]> = (...args: Args) => VNodeChild
 
-export type VueNode = VNodeChild | RenderNodeFn
+export type VueNode = RenderNodeFn | boolean | string | number | null | undefined | VNode
 
 export type EmitsType<T extends Record<string, any>> = T & {
   [key: string]: (...args: any[]) => void
