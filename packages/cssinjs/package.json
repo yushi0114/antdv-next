@@ -16,6 +16,10 @@
       "default": "./dist/cssinjs-utils/index.js"
     }
   },
+  "files": [
+    "dist",
+    "package.json"
+  ],
   "scripts": {
     "test": "vitest run",
     "test:watch": "vitest watch",

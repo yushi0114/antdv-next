@@ -173,7 +173,7 @@ export interface ConfigComponentProps {
   tag?: TagConfig
   layout?: ComponentStyleConfig
   empty?: EmptyConfig
-
+  result?: ComponentStyleConfig
 }
 
 export interface ConfigConsumerProps extends ConfigComponentProps {
@@ -222,9 +222,22 @@ export function useConfig() {
   }) as Ref<ConfigConsumerProps>)
 }
 
+/**
+ * Utility type to convert ConfigConsumerProps to a reactive refs structure.
+ * Functions remain as-is, other values are wrapped in Ref.
+ */
+export type ConfigRefs<R extends ConfigConsumerProps = ConfigConsumerProps> = {
+  [K in keyof R]?: R[K] extends (...args: any[]) => any
+    ? R[K]
+    : R[K] extends object | undefined
+      ? Ref<R[K]>
+      : Ref<R[K]>
+}
+
 export function useBaseConfig<K extends string>(suffixCls?: K, props?: ComponentBaseProps) {
   const config = useConfig()
   return {
+    result: computed(() => config.value?.result),
     getPrefixCls: (suffixCls?: string, prefixCls?: string) => config.value?.getPrefixCls(suffixCls, prefixCls),
     prefixCls: computed(() => {
       return config.value?.getPrefixCls(suffixCls, props?.prefixCls)
