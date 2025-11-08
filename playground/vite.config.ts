@@ -21,6 +21,9 @@ export default defineConfig({
   server: {
     port: 3322,
   },
+  optimizeDeps: {
+    exclude: ['@v-c/segmented'],
+  },
   resolve: {
     alias: [
       {

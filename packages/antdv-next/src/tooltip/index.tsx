@@ -1,4 +1,4 @@
-import type { placements as Placements } from '@v-c/tooltip'
+import type { placements as Placements, TooltipProps as VcTooltipProps } from '@v-c/tooltip'
 import type { ActionType, AlignType } from '@v-c/trigger'
 import type { LiteralUnion } from '@v-c/util/dist/type'
 import type { App, SlotsType } from 'vue'
@@ -10,12 +10,15 @@ import type { ComponentBaseProps } from '../config-provider/context.ts'
 import VcTooltip from '@v-c/tooltip'
 import { UniqueProvider } from '@v-c/trigger'
 import { clsx } from '@v-c/util'
-import { computed, defineComponent, shallowRef, watchEffect } from 'vue'
+import { filterEmpty } from '@v-c/util/dist/props-util'
+import { getTransitionName } from '@v-c/util/dist/utils/transition'
+import { computed, createVNode, defineComponent, isVNode, shallowRef, watchEffect } from 'vue'
 import { ContextIsolator } from '../_util/ContextIsolator.tsx'
 import { useMergeSemantic, useToArr, useToProps } from '../_util/hooks'
 import { useZIndex } from '../_util/hooks/useZIndex.ts'
 import getPlacements from '../_util/placements.ts'
 import { getSlotPropsFnRun, toPropsRefs } from '../_util/tools.ts'
+import { ZIndexProvider } from '../_util/zindexContext.ts'
 import { useComponentBaseConfig } from '../config-provider/context.ts'
 import useCSSVarCls from '../config-provider/hooks/useCSSVarCls.ts'
 import { useToken } from '../theme/internal.ts'
@@ -82,6 +85,8 @@ export interface TriggerCommonApi extends ComponentBaseProps {
   mouseLeaveDelay?: number
   classes?: TooltipClassNamesType
   styles?: TooltipStylesType
+  getTooltipContainer?: (node: HTMLElement) => HTMLElement
+  motion?: VcTooltipProps['motion']
 }
 
 export interface TooltipProps extends TriggerCommonApi {
@@ -90,6 +95,7 @@ export interface TooltipProps extends TriggerCommonApi {
   title?: VueNode
   overlay?: VueNode
   openClass?: string
+  unique?: boolean
 }
 
 export interface TooltipEmits {
@@ -98,7 +104,8 @@ export interface TooltipEmits {
 }
 
 export interface TooltipSlots {
-  title: () => VueNode
+  title: () => any
+  default: () => any
 }
 
 /**
@@ -132,6 +139,7 @@ const InternalTooltip = defineComponent<
       style: contextStyle,
       classes: contextClassNames,
       styles: contextStyles,
+      getPopupContainer: getContextPopupContainer,
     } = useComponentBaseConfig('tooltip', props, ['arrow'])
     const {
       arrow: tooltipArrow,
@@ -204,7 +212,19 @@ const InternalTooltip = defineComponent<
     // ============================ zIndex ============================
     const [zIndex, contextZIndex] = useZIndex('Tooltip', computed(() => props.zIndex))
     return () => {
-      const { color, rootClass } = props
+      const {
+        color,
+        rootClass,
+        placement,
+        mouseLeaveDelay,
+        mouseEnterDelay,
+        getPopupContainer,
+        getTooltipContainer,
+        afterOpenChange,
+        motion,
+        destroyOnHidden,
+        openClass,
+      } = props
       const title = getSlotPropsFnRun(slots, props, 'title')
       const overlay = getSlotPropsFnRun(slots, props, 'overlay')
       noTitle = !title && !overlay && title !== 0 // overlay for old version compatibility
@@ -212,6 +232,11 @@ const InternalTooltip = defineComponent<
       const memoOverlayWrapper = (
         <ContextIsolator space>{memoOverlay}</ContextIsolator>
       )
+      const children = filterEmpty(slots.default?.())
+      let child = children?.[0]
+      child = isVNode(child) ? child : <span>{child}</span>
+      const childProps = child?.props ?? {}
+      const childCls = !childProps?.class || typeof childProps?.class === 'string' ? clsx(childProps.class, openClass || `${prefixCls.value}-open`) : childProps.class
 
       // Color
       const colorInfo = parseColor(prefixCls.value, color)
@@ -225,11 +250,63 @@ const InternalTooltip = defineComponent<
         contextClassName.value,
         mergedClassNames.value.root,
       )
-      const containerStyle = [mergedStyles.value.container, colorInfo.overlayStyle]
+      const containerStyle = {
+        ...mergedStyles.value.container,
+        ...colorInfo.overlayStyle,
+      }
+
+      let tempOpen = open.value
+      // Hide tooltip when there is no title
+      if (!(props.open !== undefined) && noTitle) {
+        tempOpen = false
+      }
       const content = (
-        <VcTooltip></VcTooltip>
+        <VcTooltip
+          {...attrs}
+          zIndex={zIndex.value}
+          showArrow={mergedShowArrow.value}
+          placement={placement}
+          mouseLeaveDelay={mouseLeaveDelay}
+          mouseEnterDelay={mouseEnterDelay}
+          prefixCls={prefixCls.value}
+          classNames={{
+            root: rootClassNames,
+            container: mergedClassNames.value.container,
+            arrow: mergedClassNames.value.arrow,
+            uniqueContainer: clsx(themeCls, mergedClassNames.value.container),
+          }}
+          styles={{
+            root: {
+              ...arrowContentStyle,
+              ...mergedStyles.value?.root,
+              ...contextStyle.value,
+            },
+            container: containerStyle,
+            uniqueContainer: containerStyle,
+            arrow: mergedStyles.value.arrow,
+          }}
+          getTooltipContainer={getPopupContainer || getTooltipContainer || getContextPopupContainer}
+          ref={tooltipRef}
+          builtinPlacements={tooltipPlacements.value}
+          overlay={memoOverlayWrapper}
+          visible={tempOpen}
+          onVisibleChange={onInternalOpenChange}
+          afterVisibleChange={afterOpenChange}
+          arrowContent={<span class={`${prefixCls.value}-arrow-content`} />}
+          motion={{
+            name: getTransitionName(
+              rootPrefixCls.value,
+              'zoom-big-fast',
+              typeof motion?.name === 'string' ? motion?.name : undefined,
+            ),
+            duration: 1000,
+          }}
+          destroyOnHidden={destroyOnHidden}
+        >
+          {tempOpen ? createVNode(child, { class: childCls }) : child}
+        </VcTooltip>
       )
-      return null
+      return <ZIndexProvider value={contextZIndex.value}>{content}</ZIndexProvider>
     }
   },
   {

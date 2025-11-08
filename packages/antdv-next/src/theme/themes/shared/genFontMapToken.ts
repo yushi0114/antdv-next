@@ -17,13 +17,13 @@ function genFontMapToken(fontSize: number): FontMapToken {
     fontSizeSM,
     fontSize: fontSizeMD,
     fontSizeLG,
-    fontSizeXL: fontSizes[3],
+    fontSizeXL: fontSizes[3]!,
 
-    fontSizeHeading1: fontSizes[6],
-    fontSizeHeading2: fontSizes[5],
-    fontSizeHeading3: fontSizes[4],
-    fontSizeHeading4: fontSizes[3],
-    fontSizeHeading5: fontSizes[2],
+    fontSizeHeading1: fontSizes[6]!,
+    fontSizeHeading2: fontSizes[5]!,
+    fontSizeHeading3: fontSizes[4]!,
+    fontSizeHeading4: fontSizes[3]!,
+    fontSizeHeading5: fontSizes[2]!,
 
     lineHeight,
     lineHeightLG,
@@ -33,12 +33,12 @@ function genFontMapToken(fontSize: number): FontMapToken {
     fontHeightLG: Math.round(lineHeightLG * fontSizeLG),
     fontHeightSM: Math.round(lineHeightSM * fontSizeSM),
 
-    lineHeightHeading1: lineHeights[6],
-    lineHeightHeading2: lineHeights[5],
-    lineHeightHeading3: lineHeights[4],
-    lineHeightHeading4: lineHeights[3],
-    lineHeightHeading5: lineHeights[2],
-  } as FontMapToken
+    lineHeightHeading1: lineHeights[6]!,
+    lineHeightHeading2: lineHeights[5]!,
+    lineHeightHeading3: lineHeights[4]!,
+    lineHeightHeading4: lineHeights[3]!,
+    lineHeightHeading5: lineHeights[2]!,
+  }
 }
 
 export default genFontMapToken

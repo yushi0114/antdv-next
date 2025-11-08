@@ -1,4 +1,4 @@
-import type { ColorMap, GenerateColorMap, GenerateNeutralColorMap } from '../ColorMap'
+import type { GenerateColorMap, GenerateNeutralColorMap } from '../ColorMap'
 
 import { generate } from '@ant-design/colors'
 import { getAlphaColor, getSolidColor } from './colorAlgorithm'
@@ -6,20 +6,17 @@ import { getAlphaColor, getSolidColor } from './colorAlgorithm'
 export const generateColorPalettes: GenerateColorMap = (baseColor: string) => {
   const colors = generate(baseColor)
   return {
-    1: colors[0],
-    2: colors[1],
-    3: colors[2],
-    4: colors[3],
-    5: colors[4],
-    6: colors[5],
-    7: colors[6],
-    8: colors[4],
-    9: colors[5],
-    10: colors[6],
-    // 8: colors[7],
-    // 9: colors[8],
-    // 10: colors[9],
-  } as ColorMap
+    1: colors[0]!,
+    2: colors[1]!,
+    3: colors[2]!,
+    4: colors[3]!,
+    5: colors[4]!,
+    6: colors[5]!,
+    7: colors[6]!,
+    8: colors[4]!,
+    9: colors[5]!,
+    10: colors[6]!,
+  }
 }
 
 export const generateNeutralColorPalettes: GenerateNeutralColorMap = (
@@ -54,6 +51,7 @@ export const generateNeutralColorPalettes: GenerateNeutralColorMap = (
     colorBgBlur: 'transparent',
 
     colorBorder: getSolidColor(colorBgBase, 15),
+    colorBorderDisabled: getSolidColor(colorBgBase, 15),
     colorBorderSecondary: getSolidColor(colorBgBase, 6),
   }
 }

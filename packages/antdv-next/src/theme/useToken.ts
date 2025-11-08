@@ -101,45 +101,38 @@ export default function useToken(): [
     token: Ref<GlobalToken>,
     hashId: Ref<string>,
     realToken: Ref<GlobalToken>,
-    cssVar?: Ref<DesignTokenProviderProps['cssVar']>,
+    cssVar: Ref<DesignTokenProviderProps['cssVar']>,
+    zeroRuntime: Ref<boolean>,
 ] {
   const designContext = useDesignToken()
   const salt = computed(() => `${version}-${designContext.value.hashed || ''}`)
   const mergedTheme = computed(() => designContext.value?.theme || defaultTheme)
   const cssVar = computed(() => {
     const cssVar = designContext.value.cssVar
-    return cssVar && {
-      prefix: cssVar.prefix,
-      key: cssVar.key,
-      unitless,
-      ignore,
-      preserve,
+    return {
+      prefix: cssVar?.prefix || 'ant',
+      key: cssVar?.key || 'css-var-root',
     }
   })
   const cachedToken = useCacheToken<GlobalToken, SeedToken>(
     mergedTheme,
     computed(() => [defaultSeedToken, designContext.value.token]),
     computed(() => {
-      const cssVar = designContext.value.cssVar
       return {
         salt: salt.value,
         override: designContext.value.override,
         getComputedToken,
-        // formatToken will not be consumed after 1.15.0 with getComputedToken.
-        // But token will break if @ant-design/cssinjs is under 1.15.0 without it
-        formatToken,
-        cssVar: cssVar && {
-          prefix: cssVar.prefix,
-          key: cssVar.key,
+        cssVar: {
+          ...cssVar.value,
           unitless,
           ignore,
           preserve,
         },
-      }
+      } as any
     }),
   )
   const realToken = computed(() => cachedToken.value[2])
   const hashId = computed(() => designContext.value.hashed ? cachedToken.value[1] : '')
   const token = computed(() => cachedToken.value[0])
-  return [mergedTheme, realToken, hashId, token, cssVar]
+  return [mergedTheme, realToken, hashId, token, cssVar, computed(() => !!designContext.value?.zeroRuntime)]
 }

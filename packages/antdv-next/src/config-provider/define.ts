@@ -1,5 +1,7 @@
 import type { Locale } from '../locale'
 import type {
+  AlertConfig,
+  ButtonConfig,
   ComponentStyleConfig,
   CSPConfig,
   DirectionType,
@@ -50,9 +52,9 @@ export interface ConfigProviderProps {
   popupOverflow?: PopupOverflow
   theme?: ThemeConfig
   // warning?: WarningContextProps;
-  // alert?: AlertConfig;
+  alert?: AlertConfig
   anchor?: ComponentStyleConfig
-  // button?: ButtonConfig;
+  button?: ButtonConfig
   calendar?: ComponentStyleConfig
   carousel?: ComponentStyleConfig
   // cascader?: CascaderConfig;

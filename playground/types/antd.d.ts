@@ -39,5 +39,7 @@ declare module 'vue' {
     AWatermark: typeof import('antdv-next')['Watermark']
     AQrcode: typeof import('antdv-next')['QRCode']
     ACollapse: typeof import('antdv-next')['Collapse']
+    ATooltip: typeof import('antdv-next')['Tooltip']
+    ASegmented: typeof import('antdv-next')['Segmented']
   }
 }

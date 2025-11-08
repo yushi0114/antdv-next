@@ -1,4 +1,5 @@
 export interface FontMapToken {
+  // Font Size
   /**
    * @desc 小号字体大小
    * @descEN Small font size

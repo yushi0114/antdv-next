@@ -112,7 +112,7 @@ export interface AliasToken extends MapToken {
   colorTextLightSolid: string
 
   /**
-  /**
+     /**
    * @nameZH 弱操作图标颜色
    * @nameEN Weak action icon color
    * @desc 控制弱操作图标的颜色，例如 allowClear 或 Alert 关闭按钮。

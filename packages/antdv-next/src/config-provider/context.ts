@@ -14,6 +14,7 @@ import type { FlexProps } from '../flex'
 import type { Locale } from '../locale'
 import type { QRCodeProps } from '../qrcode'
 import type { ResultProps } from '../result'
+import type { SegmentedProps } from '../segmented'
 import type { SkeletonProps } from '../skeleton'
 import type { SpaceProps } from '../space'
 import type { SpinProps } from '../spin'
@@ -200,6 +201,8 @@ export type TooltipConfig = ComponentStyleConfig & Pick<TooltipProps, 'styles' |
   unique?: boolean
 }
 
+export type SegmentedConfig = ComponentStyleConfig & Pick<SegmentedProps, 'classes' | 'styles'>
+
 export interface ConfigComponentProps {
   // input?: InputConfig;
   // textArea?: TextAreaConfig;
@@ -224,7 +227,7 @@ export interface ConfigComponentProps {
   typography?: ComponentStyleConfig
   skeleton?: SkeletonConfig
   spin?: SpinConfig
-  segmented?: ComponentStyleConfig
+  segmented?: SegmentedConfig
   steps?: ComponentStyleConfig
   statistic?: StatisticConfig
   // image?: ImageConfig;
