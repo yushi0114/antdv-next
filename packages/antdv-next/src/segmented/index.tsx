@@ -11,10 +11,10 @@ import type { SizeType } from '../config-provider/SizeContext.tsx'
 import type { TooltipProps } from '../tooltip'
 import VcSegmented from '@v-c/segmented'
 import { clsx } from '@v-c/util'
-import { removeUndefined } from '@v-c/util/dist/props-util'
+import { filterEmpty, removeUndefined } from '@v-c/util/dist/props-util'
 import { computed, defineComponent, useId } from 'vue'
 import { pureAttrs, useMergeSemantic, useOrientation, useToArr, useToProps } from '../_util/hooks'
-import { toPropsRefs } from '../_util/tools.ts'
+import { getSlotPropsFnRun, toPropsRefs } from '../_util/tools.ts'
 import { useComponentBaseConfig } from '../config-provider/context.ts'
 import { useSize } from '../config-provider/hooks/useSize.ts'
 import Tooltip from '../tooltip'
@@ -31,14 +31,15 @@ interface SegmentedLabeledOptionWithIcon<ValueType = RcSegmentedValue>
   extends Omit<RcSegmentedLabeledOption<ValueType>, 'label'> {
   label?: RcSegmentedLabeledOption['label']
   /** Set icon for Segmented item */
-  icon: VueNode
+  icon?: VueNode
   tooltip?: string | TooltipProps
 }
 
 function isSegmentedLabeledOptionWithIcon(
   option: SegmentedRawOption | SegmentedLabeledOptionWithIcon | SegmentedLabeledOptionWithoutIcon,
+  iconFromSlot?: any[],
 ): option is SegmentedLabeledOptionWithIcon {
-  return typeof option === 'object' && !!(option as SegmentedLabeledOptionWithIcon)?.icon
+  return typeof option === 'object' && !!((option as SegmentedLabeledOptionWithIcon)?.icon || iconFromSlot?.length)
 }
 
 export type SegmentedLabeledOption<ValueType = RcSegmentedValue>
@@ -62,6 +63,8 @@ export interface SegmentedProps extends Omit<RCSegmentedProps, 'size' | 'options
   classes?: SegmentedClassNamesType
   styles?: SegmentedStylesType
   shape?: 'default' | 'round'
+  iconRender?: (option: SegmentedLabeledOption) => any
+  labelRender?: (option: SegmentedLabeledOption) => any
 }
 
 export interface SegmentedEmits {
@@ -72,6 +75,9 @@ export interface SegmentedEmits {
 
 export interface SegmentedSlots {
   // itemRender: (option: SegmentedLabeledOption | SegmentedRawOption, checked: boolean) => VueNode
+  iconRender: (option: SegmentedLabeledOption) => any
+  labelRender: (option: SegmentedLabeledOption) => any
+
 }
 
 const defaults = {
@@ -85,7 +91,7 @@ const InternalSegmented = defineComponent<
   string,
   SlotsType<SegmentedSlots>
 >(
-  (props = defaults, { attrs, emit }) => {
+  (props = defaults, { attrs, emit, slots }) => {
     const defaultName = useId()
     const {
       prefixCls,
@@ -121,8 +127,18 @@ const InternalSegmented = defineComponent<
     // syntactic sugar to support `icon` for Segmented Item
     const extendedOptions = computed(() => {
       return props?.options?.map((option) => {
-        if (isSegmentedLabeledOptionWithIcon(option)) {
-          const { icon, label, ...restOption } = option
+        const iconRender = slots.iconRender || props.iconRender
+        const _option = typeof option === 'object' ? option : { value: option }
+        let iconFromSlot = iconRender ? iconRender(_option) : null
+        iconFromSlot = filterEmpty(Array.isArray(iconFromSlot) ? iconFromSlot : [iconFromSlot])
+        const labelRender = slots.labelRender || props.labelRender
+        let labelFromSlot = labelRender ? labelRender(_option) : null
+        labelFromSlot = filterEmpty(Array.isArray(labelFromSlot) ? labelFromSlot : [labelFromSlot])
+        if (isSegmentedLabeledOptionWithIcon(option, iconFromSlot)) {
+          const { label, ...restOption } = option
+          labelFromSlot = labelFromSlot.length > 0 ? labelFromSlot : label
+          const showLabel = (labelFromSlot && labelFromSlot.length > 0) || !!label
+          const icon = getSlotPropsFnRun({}, option, 'icon') ?? iconFromSlot
           return {
             ...restOption,
             label: (
@@ -133,7 +149,7 @@ const InternalSegmented = defineComponent<
                 >
                   {icon}
                 </span>
-                {!!label && <span>{label}</span>}
+                {showLabel && <span>{labelFromSlot}</span>}
               </>
             ),
           }
