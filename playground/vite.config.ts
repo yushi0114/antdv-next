@@ -12,7 +12,9 @@ const baseUrl = fileURLToPath(new URL('.', import.meta.url))
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
-    tsxResolveTypes(),
+    tsxResolveTypes({
+      defaultPropsToUndefined: true,
+    }),
     vueJsx(),
     vue(),
     inspect(),

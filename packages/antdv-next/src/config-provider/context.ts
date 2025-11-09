@@ -6,12 +6,13 @@ import type { AlertProps } from '../alert'
 import type { AnchorProps } from '../anchor'
 import type { BadgeProps } from '../badge'
 import type { ButtonProps } from '../button'
-import type { CollapseProps } from '../collapse/Collapse.tsx'
+import type { CollapseProps } from '../collapse'
 import type { DescriptionsProps } from '../descriptions'
 import type { DividerProps } from '../divider'
 import type { EmptyProps } from '../empty'
 import type { FlexProps } from '../flex'
 import type { Locale } from '../locale'
+import type { PopoverProps } from '../popover'
 import type { QRCodeProps } from '../qrcode'
 import type { ResultProps } from '../result'
 import type { SegmentedProps } from '../segmented'
@@ -201,6 +202,8 @@ export type TooltipConfig = ComponentStyleConfig & Pick<TooltipProps, 'styles' |
   unique?: boolean
 }
 
+export type PopoverConfig = ComponentStyleConfig & Pick<PopoverProps, 'classes' | 'styles' | 'arrow'>
+
 export type SegmentedConfig = ComponentStyleConfig & Pick<SegmentedProps, 'classes' | 'styles'>
 
 export interface ConfigComponentProps {
@@ -258,7 +261,7 @@ export interface ConfigComponentProps {
   // timePicker?: TimePickerConfig;
   // tour?: TourConfig;
   tooltip?: TooltipConfig
-  // popover?: PopoverConfig;
+  popover?: PopoverConfig
   // popconfirm?: PopconfirmConfig;
   // upload?: UploadConfig;
   // notification?: NotificationConfig;

@@ -13,7 +13,7 @@ import { filterEmpty } from '@v-c/util/dist/props-util'
 import { getTransitionName } from '@v-c/util/dist/utils/transition'
 import { computed, createVNode, defineComponent, isVNode, shallowRef, watchEffect } from 'vue'
 import { ContextIsolator } from '../_util/ContextIsolator.tsx'
-import { pureAttrs, useMergeSemantic, useToArr, useToProps } from '../_util/hooks'
+import { useMergeSemantic, useToArr, useToProps } from '../_util/hooks'
 import { useZIndex } from '../_util/hooks/useZIndex.ts'
 import getPlacements from '../_util/placements.ts'
 import { getSlotPropsFnRun, toPropsRefs } from '../_util/tools.ts'
@@ -22,6 +22,7 @@ import { useComponentBaseConfig } from '../config-provider/context.ts'
 import useCSSVarCls from '../config-provider/hooks/useCSSVarCls.ts'
 import { useToken } from '../theme/internal.ts'
 import useMergedArrow from './hooks/useMergedArrow.ts'
+import PurePanel from './PurePanel'
 import useStyle from './style'
 import UniqueProvider from './UniqueProvider'
 import { parseColor } from './util.ts'
@@ -99,7 +100,8 @@ export interface TooltipProps extends TriggerCommonApi {
 }
 
 export interface TooltipEmits {
-  openChange: (open: boolean) => void
+  'openChange': (open: boolean) => void
+  'update:open': (open: boolean) => void
   [key: string]: (...args: any[]) => void
 }
 
@@ -174,6 +176,7 @@ const InternalTooltip = defineComponent<
       open.value = noTitle ? false : vis
       if (!noTitle) {
         emit('openChange', vis)
+        emit('update:open', vis)
       }
     }
 
@@ -263,7 +266,7 @@ const InternalTooltip = defineComponent<
       const content = (
         <VcTooltip
           unique
-          {...pureAttrs(attrs)}
+          {...attrs}
           zIndex={zIndex.value}
           showArrow={mergedShowArrow.value}
           placement={placement}
@@ -324,6 +327,7 @@ const InternalTooltip = defineComponent<
 }
 
 ;(InternalTooltip as any).UniqueProvider = UniqueProvider
+;(InternalTooltip as any)._InternalPanelDoNotUseOrYouWillBeFired = PurePanel
 
 export {
   UniqueProvider,
@@ -331,4 +335,5 @@ export {
 
 export default InternalTooltip as typeof InternalTooltip & {
   UniqueProvider: typeof UniqueProvider
+  _InternalPanelDoNotUseOrYouWillBeFired: typeof PurePanel
 }

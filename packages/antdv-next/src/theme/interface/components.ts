@@ -37,7 +37,7 @@ import type { ComponentToken as LayoutComponentToken } from '../../layout/style'
 // import type { ComponentToken as NotificationComponentToken } from '../../notification/style';
 // import type { ComponentToken as PaginationComponentToken } from '../../pagination/style';
 // import type { ComponentToken as PopconfirmComponentToken } from '../../popconfirm/style';
-// import type { ComponentToken as PopoverComponentToken } from '../../popover/style';
+import type { ComponentToken as PopoverComponentToken } from '../../popover/style'
 // import type { ComponentToken as ProgressComponentToken } from '../../progress/style';
 import type { ComponentToken as QRCodeComponentToken } from '../../qrcode/style'
 // import type { ComponentToken as RadioComponentToken } from '../../radio/style';
@@ -98,7 +98,7 @@ export interface ComponentTokenMap {
   // Mentions?: MentionsComponentToken;
   // Notification?: NotificationComponentToken;
   // Pagination?: PaginationComponentToken;
-  // Popover?: PopoverComponentToken;
+  Popover?: PopoverComponentToken
   // Popconfirm?: PopconfirmComponentToken;
   // Rate?: RateComponentToken;
   // Radio?: RadioComponentToken;
