@@ -98,7 +98,6 @@ const MenuItem = defineComponent<
         tooltipProps.open = false
       }
       const childrenLength = children.length
-
       let returnNode = (
         <Item
           {...pureAttrs(attrs) as any}
@@ -115,10 +114,12 @@ const MenuItem = defineComponent<
           title={typeof title === 'string' ? title : undefined}
         >
           {
-            createVNode(icon, {
-              class: clsx(`${prefixCls}-item-icon`, firstLevel ? classes?.itemIcon : classes?.subMenu?.itemIcon),
-              style: firstLevel ? styles.itemIcon : styles?.subMenu?.itemIcon,
-            })
+            icon
+              ? createVNode(icon, {
+                  class: clsx(`${prefixCls}-item-icon`, firstLevel ? classes?.itemIcon : classes?.subMenu?.itemIcon),
+                  style: firstLevel ? styles.itemIcon : styles?.subMenu?.itemIcon,
+                })
+              : null
           }
           {renderItemChildren(isInlineCollapsed)}
         </Item>
