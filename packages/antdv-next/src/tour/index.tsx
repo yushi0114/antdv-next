@@ -38,7 +38,7 @@ const Tour = defineComponent<
     const [hashId, cssVarCls] = useStyle(prefixCls)
     const [,token] = useToken()
     const mergedSteps = computed(() => {
-      return props?.steps?.map((step, index) => {
+      return (props?.steps ?? []).map((step, index) => {
         const _cover = filterEmpty(slots?.coverRender?.({ step, index })).filter(Boolean)
         const _title = filterEmpty(slots?.titleRender?.({ step, index })).filter(Boolean)
         const _description = filterEmpty(slots?.descriptionRender?.({ step, index })).filter(Boolean)
@@ -55,6 +55,18 @@ const Tour = defineComponent<
             },
           ),
         }
+      })
+    })
+    const vcSteps = computed<VcTourProps['steps']>(() => {
+      return mergedSteps.value.map((step) => {
+        const {
+          class: stepClass,
+          ...restStep
+        } = step ?? {}
+        return {
+          ...restStep,
+          className: stepClass,
+        } as VcTourProps['steps'][number]
       })
     })
 
@@ -153,7 +165,7 @@ const Tour = defineComponent<
             animated
             renderPanel={mergedRenderPanel}
             builtinPlacements={builtinPlacements}
-            steps={mergedSteps.value}
+            steps={vcSteps.value}
             onClose={(current) => {
               emit('close', current)
               emit('update:open', false)
