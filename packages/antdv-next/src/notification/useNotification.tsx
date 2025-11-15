@@ -118,7 +118,7 @@ const Holder = defineComponent<HolderProps>(
         ? false
         : {
             threshold: typeof props.stack === 'object' ? props.stack.threshold : undefined,
-            offset: 0,
+            offset: 8,
             gap: token.value?.margin,
           },
     })
@@ -288,7 +288,7 @@ export function useInternalNotification(
     return <Holder key="notificaion-holder" {...notificationConfig} ref={holderRef}></Holder>
   }
   // ============================== Return ===============================
-  return [wrapAPIFn(), holderContext]
+  return [wrapAPIFn(), holderContext] as const
 }
 
 export default function useNotification(notificationConfig?: NotificationConfig) {

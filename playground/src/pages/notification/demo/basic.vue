@@ -8,7 +8,6 @@ function openNotification() {
     onClick: () => {
       console.log('Notification Clicked!')
     },
-    duration: 0,
   })
 }
 </script>
