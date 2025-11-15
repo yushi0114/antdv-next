@@ -1,9 +1,10 @@
 import type { InjectionKey } from 'vue'
+import type { ConfigOptions as MessageConfig } from '../message/interface'
 import type { NotificationConfig } from '../notification/interface'
 import { defineComponent, inject, provide } from 'vue'
 
 export interface AppConfig {
-  // message?: MessageConfig;
+  message?: MessageConfig
   notification?: NotificationConfig
 }
 
