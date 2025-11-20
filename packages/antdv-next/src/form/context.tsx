@@ -3,7 +3,7 @@ import type { InjectionKey, Ref } from 'vue'
 import type { SemanticClassNames, SemanticStyles } from '../_util/hooks'
 import type { Variant } from '../config-provider/context'
 import type { FormLayout, FormSemanticName, RequiredMark } from './Form'
-import type { ValidateStatus } from './FormItem'
+import type { FeedbackIcons, ValidateStatus } from './FormItem'
 import type { ColPropsWithClass } from './FormItemLabel.tsx'
 import type { FormLabelAlign } from './interface'
 import type { Meta, NamePath } from './types.ts'
@@ -23,7 +23,7 @@ export interface FormContextProps {
   requiredMark?: RequiredMark
   // itemRef: (name: (string | number)[]) => (node: React.ReactElement) => void;
   // form?: FormInstance;
-  // feedbackIcons?: FeedbackIcons;
+  feedbackIcons?: FeedbackIcons
 }
 
 const FormContextKey = Symbol('FormContextKey')
@@ -50,6 +50,15 @@ export interface FormItemPrefixContextProps {
 export function useFormItemPrefixContextProvider(value: Ref<FormItemPrefixContextProps>) {
   provide(FormItemPrefixContextKey, value)
 }
+
+export const FormItemPrefixContextProvider = defineComponent<FormItemPrefixContextProps>(
+  (props, { slots }) => {
+    useFormItemPrefixContextProvider(computed(() => props))
+    return () => {
+      return slots?.default?.()
+    }
+  },
+)
 
 export function useFormItemPrefixContext() {
   return inject(FormItemPrefixContextKey, ref({
@@ -92,6 +101,18 @@ const NoStyleItemContextKey: InjectionKey<ReportMetaChange | null> = Symbol('NoS
 export function useNoStyleItemContextProvider(value: ReportMetaChange) {
   provide(NoStyleItemContextKey, value)
 }
+
+export const NoStyleItemContextProvider = defineComponent<{ value: ReportMetaChange }>(
+  (props, { slots }) => {
+    useNoStyleItemContextProvider(props.value)
+    return () => {
+      return slots?.default?.()
+    }
+  },
+  {
+    name: 'NoStyleItemContext',
+  },
+)
 
 export function useNoStyleItemContext() {
   return inject(NoStyleItemContextKey, null)
