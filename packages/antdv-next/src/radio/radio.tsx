@@ -146,8 +146,15 @@ const InternalRadio = defineComponent<
               prefixCls={prefixCls.value}
               ref={innerRef}
               onClick={onInputClick}
+              {
+                ...{
+                  'onUpdate:checked': (checked: boolean) => {
+                    emit('update:checked', checked)
+                  },
+                }
+              }
             />
-            {!children
+            {children
               ? (
                   <span
                     class={clsx(`${prefixCls.value}-label`, mergedClassNames.value.label)}
@@ -161,6 +168,10 @@ const InternalRadio = defineComponent<
         </Wave>
       )
     }
+  },
+  {
+    name: 'ARadio',
+    inheritAttrs: false,
   },
 )
 

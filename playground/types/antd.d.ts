@@ -56,5 +56,8 @@ declare module 'vue' {
     AFormItem: typeof import('antdv-next')['FormItem']
     ACheckbox: typeof import('antdv-next')['Checkbox']
     ACheckboxGroup: typeof import('antdv-next')['CheckboxGroup']
+    ARadio: typeof import('antdv-next')['Radio']
+    ARadioGroup: typeof import('antdv-next')['RadioGroup']
+    ARadioButton: typeof import('antdv-next')['RadioButton']
   }
 }

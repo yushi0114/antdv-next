@@ -1,4 +1,4 @@
-import type { App, Plugin } from 'vue'
+import type { App } from 'vue'
 import Group from './group'
 import Radio from './radio'
 import Button from './radioButton'
@@ -18,21 +18,14 @@ export type {
 export const RadioGroup = Group
 export const RadioButton = Button
 
-type CompoundedComponent = typeof Radio & Plugin & {
-  Group: typeof Group
-  Button: typeof Button
-  /** @internal */
-  __ANT_RADIO: boolean
-}
-const RadioCompounded = Radio as CompoundedComponent
-RadioCompounded.Button = Button
-RadioCompounded.Group = Group
-RadioCompounded.__ANT_RADIO = true
+;(Radio as any).Button = Button
+;(Radio as any).Group = Group
+;(Radio as any).__ANT_RADIO = true
 
-RadioCompounded.install = (app: App) => {
-  app.component(Radio.name, RadioCompounded)
+;(Radio as any).install = (app: App) => {
+  app.component(Radio.name, Radio)
   app.component(RadioGroup.name, RadioGroup)
   app.component(RadioButton.name, RadioButton)
 }
 
-export default RadioCompounded
+export default Radio
