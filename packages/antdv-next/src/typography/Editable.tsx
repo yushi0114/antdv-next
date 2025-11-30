@@ -130,7 +130,7 @@ const Editable = defineComponent<
         <div class={textAreaClassName} style={props.style}>
           <TextArea
             ref={ref}
-            maxLength={maxLength.value}
+            maxlength={maxLength.value}
             value={current.value}
             onChange={onChange}
             onKeydown={onKeyDown}
