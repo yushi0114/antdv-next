@@ -14,10 +14,6 @@ export interface UseChildLoadEventsOptions {
 /**
  * 监听某个容器内所有“可能触发 load/error 的元素”，
  * 并把事件统一交给回调处理。
- *
- * 使用方式：
- * const { bind, clear } = useChildLoadEvents()
- * bind(containerEl, (type, el, ev) => { ... })
  */
 export function useChildLoadEvents(options: UseChildLoadEventsOptions = {}) {
   const { triggerForAlreadyLoaded = true } = options
@@ -32,7 +28,7 @@ export function useChildLoadEvents(options: UseChildLoadEventsOptions = {}) {
     }
   }
 
-  const bind = (
+  const bindEvent = (
     root: HTMLElement | null | undefined,
     callback: (type: ResourceEventType, el: Element, ev: Event | null) => void,
   ) => {
@@ -98,7 +94,7 @@ export function useChildLoadEvents(options: UseChildLoadEventsOptions = {}) {
   onBeforeUnmount(clear)
 
   return {
-    bind,
+    bindEvent,
     clear,
   }
 }

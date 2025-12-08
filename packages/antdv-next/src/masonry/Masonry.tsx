@@ -10,7 +10,7 @@ import { clsx } from '@v-c/util'
 import { getDOM } from '@v-c/util/dist/Dom/findDOMNode'
 import isEqual from '@v-c/util/dist/isEqual'
 import { getTransitionGroupProps } from '@v-c/util/dist/utils/transition'
-import { computed, defineComponent, onMounted, onUnmounted, ref, shallowRef, TransitionGroup, watch } from 'vue'
+import { computed, defineComponent, onMounted, ref, shallowRef, TransitionGroup, watch } from 'vue'
 import { getAttrStyleAndClass, useMergeSemantic, useToArr, useToProps } from '../_util/hooks'
 import { useChildLoadEvents } from '../_util/hooks/useChildLoadEvents.ts'
 import { responsiveArray } from '../_util/responsiveObserver'
@@ -166,14 +166,11 @@ const Masonry = defineComponent<
       }
     })
 
-    const { clear, bind } = useChildLoadEvents()
+    const { bindEvent } = useChildLoadEvents()
     onMounted(() => {
       if (containerRef.value) {
-        bind(containerRef.value, () => {
+        bindEvent(containerRef.value, () => {
           collectItemSize()
-        })
-        onUnmounted(() => {
-          clear()
         })
       }
     })
