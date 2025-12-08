@@ -361,6 +361,9 @@ importers:
 
   playground:
     dependencies:
+      '@ant-design/colors':
+        specifier: 'catalog:'
+        version: 7.2.1
       '@antdv-next/cssinjs':
         specifier: workspace:^
         version: link:../packages/cssinjs

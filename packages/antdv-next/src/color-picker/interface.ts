@@ -83,6 +83,7 @@ export type ColorPickerProps
   | 'components'> & {
     mode?: ModeType | ModeType[]
     value?: ColorValueType
+    color?: ColorValueType
     defaultValue?: ColorValueType
     open?: boolean
     disabled?: boolean
@@ -109,6 +110,7 @@ export type ColorPickerProps
 
 export interface ColorPickerEmits {
   'change': (value: AggregationColor, css: string) => void
+  'update:color': (value: ColorValueType) => void
   'clear': () => void
   'changeComplete': (value: AggregationColor) => void
   'openChange': (open: boolean) => void
