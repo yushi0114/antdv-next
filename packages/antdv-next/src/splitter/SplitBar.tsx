@@ -64,7 +64,6 @@ const SplitBar = defineComponent<SplitBarProps>(
     )
 
     const splitBarPrefixCls = computed(() => `${prefixCls.value}-bar`)
-    console.log(splitBarPrefixCls)
     // ======================== Resize ========================
     const startPos = shallowRef<[x: number, y: number]>()
     const constrainedOffset = shallowRef(0)
