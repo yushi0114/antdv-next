@@ -13,6 +13,9 @@ export type ItemType = Omit<PanelProps, 'collapsible'> & {
 }
 
 function getCollapsible(collapsible?: PanelProps['collapsible']): ItemType['collapsible'] {
+  if ((collapsible as any) === '') {
+    collapsible = true
+  }
   if (collapsible && typeof collapsible === 'object') {
     return {
       ...collapsible,
@@ -35,10 +38,12 @@ export function convertChildrenToItems(children: VNode[]): ItemType[] {
   return filterEmpty(children).filter(item => isVNode(item)).map((node) => {
     const { props, children } = node
     const defaultSize = props?.['default-size'] ?? props?.defaultSize
-    const { collapsible, ...restProps } = (props ?? {}) as PanelProps
+    const { collapsible, resizable, ...restProps } = (props ?? {}) as PanelProps
+    const mergedResizable = resizable !== false
     return {
       ...restProps,
       defaultSize,
+      resizable: mergedResizable,
       collapsible: getCollapsible(collapsible),
       _$slots: children,
     } as ItemType

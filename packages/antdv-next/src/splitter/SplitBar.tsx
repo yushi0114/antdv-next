@@ -64,6 +64,7 @@ const SplitBar = defineComponent<SplitBarProps>(
     )
 
     const splitBarPrefixCls = computed(() => `${prefixCls.value}-bar`)
+    console.log(splitBarPrefixCls)
     // ======================== Resize ========================
     const startPos = shallowRef<[x: number, y: number]>()
     const constrainedOffset = shallowRef(0)
@@ -268,7 +269,7 @@ const SplitBar = defineComponent<SplitBarProps>(
           >
             {draggerIcon !== undefined
               ? (
-                  <div class={clsx(`${splitBarPrefixCls}-dragger-icon`)}>{draggerIcon}</div>
+                  <div class={clsx(`${splitBarPrefixCls.value}-dragger-icon`)}>{draggerIcon}</div>
                 )
               : null}
           </div>
@@ -278,9 +279,9 @@ const SplitBar = defineComponent<SplitBarProps>(
             <div
               class={clsx(
                 `${splitBarPrefixCls.value}-collapse-bar`,
-                `${splitBarPrefixCls.value}}-collapse-bar-start`,
+                `${splitBarPrefixCls.value}-collapse-bar-start`,
                 {
-                  [`${splitBarPrefixCls.value}}-collapse-bar-customize`]: startCustomize,
+                  [`${splitBarPrefixCls.value}-collapse-bar-customize`]: startCustomize,
                 },
                 getVisibilityClass(showStartCollapsibleIcon),
               )}
@@ -288,8 +289,8 @@ const SplitBar = defineComponent<SplitBarProps>(
             >
               <span
                 class={clsx(
-                  `${splitBarPrefixCls.value}}-collapse-icon`,
-                  `${splitBarPrefixCls.value}}-collapse-start`,
+                  `${splitBarPrefixCls.value}-collapse-icon`,
+                  `${splitBarPrefixCls.value}-collapse-start`,
                 )}
               >
                 {startIcon}
@@ -301,10 +302,10 @@ const SplitBar = defineComponent<SplitBarProps>(
           {endCollapsible && (
             <div
               class={clsx(
-                `${splitBarPrefixCls.value}}-collapse-bar`,
-                `${splitBarPrefixCls.value}}-collapse-bar-end`,
+                `${splitBarPrefixCls.value}-collapse-bar`,
+                `${splitBarPrefixCls.value}-collapse-bar-end`,
                 {
-                  [`${splitBarPrefixCls.value}}-collapse-bar-customize`]: endCustomize,
+                  [`${splitBarPrefixCls.value}-collapse-bar-customize`]: endCustomize,
                 },
                 getVisibilityClass(showEndCollapsibleIcon),
               )}
@@ -312,8 +313,8 @@ const SplitBar = defineComponent<SplitBarProps>(
             >
               <span
                 class={clsx(
-                  `${splitBarPrefixCls.value}}-collapse-icon`,
-                  `${splitBarPrefixCls.value}}-collapse-end`,
+                  `${splitBarPrefixCls.value}-collapse-icon`,
+                  `${splitBarPrefixCls.value}-collapse-end`,
                 )}
               >
                 {endIcon}

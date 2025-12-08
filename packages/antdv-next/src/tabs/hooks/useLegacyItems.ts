@@ -1,14 +1,16 @@
 import type { Tab as VcTab } from '@v-c/tabs'
 import type { Tab, TabPaneProps, TabsProps } from '..'
-import { flattenChildren } from '@v-c/util/dist/props-util'
+import { filterEmpty, flattenChildren } from '@v-c/util/dist/props-util'
 import { computed, isVNode } from 'vue'
 import { getSlotPropsFnRun } from '../../_util/tools.ts'
 import TabPane from '../TabPane'
 
 function convertItem(item: Tab, index: number, slots?: any): VcTab {
   const { ...rest } = item
-  const content = slots?.contentRender?.({ item, index }) ?? getSlotPropsFnRun(item, {}, 'content')
-  const label = slots?.labelRender?.({ item, index }) ?? getSlotPropsFnRun(item, {}, 'label')
+  const contentRender = filterEmpty(slots?.contentRender?.({ item, index }) ?? [])
+  const labelRender = filterEmpty(slots?.labelRender?.({ item, index }) ?? [])
+  const content = contentRender.length ? contentRender : getSlotPropsFnRun(item, {}, 'content')
+  const label = labelRender.length ? labelRender : getSlotPropsFnRun(item, {}, 'label')
   return {
     ...rest,
     children: content,
