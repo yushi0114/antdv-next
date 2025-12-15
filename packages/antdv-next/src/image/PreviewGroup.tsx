@@ -45,14 +45,15 @@ export type GroupPreviewConfig = OriginPreviewConfig
     mask?: MaskType
   }
 
-export interface PreviewGroupProps extends Omit<VcPreviewGroupProps, 'preview' | 'styles'> {
+export interface PreviewGroupProps extends
+  Omit<VcPreviewGroupProps, 'preview' | 'styles'> {
   preview?: boolean | GroupPreviewConfig
   classes?: ImageClassNamesType
   styles?: ImageStylesType
 }
 
 const InternalPreviewGroup = defineComponent<PreviewGroupProps>(
-  (props, { attrs }) => {
+  (props, { attrs, slots }) => {
     // =============================== MISC ===============================
     const {
       getPrefixCls,
@@ -160,6 +161,7 @@ const InternalPreviewGroup = defineComponent<PreviewGroupProps>(
           {...otherProps}
           classNames={mergedClassNames.value}
           styles={mergedStyles.value as any}
+          v-slots={slots}
         />
       )
     }

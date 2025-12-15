@@ -91,5 +91,7 @@ declare module 'vue' {
     ADrawer: typeof import('antdv-next')['Drawer']
     AModal: typeof import('antdv-next')['Modal']
     ASteps: typeof import('antdv-next')['Steps']
+    AImage: typeof import('antdv-next')['Image']
+    AImagePreviewGroup: typeof import('antdv-next')['ImagePreviewGroup']
   }
 }
