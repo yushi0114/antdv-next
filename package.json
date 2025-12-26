@@ -2,8 +2,9 @@
   "name": "antdv-next-workspace",
   "type": "module",
   "version": "0.0.0",
+  "packageManager": "pnpm@10.18.3",
   "scripts": {
-    "dev": "pnpm -F playground dev",
+    "dev": "turbo dev --filter playground",
     "lint": "eslint . --fix"
   },
   "dependencies": {
@@ -24,6 +25,7 @@
     "jiti": "catalog:",
     "jsdom": "catalog:",
     "tsdown": "catalog:",
+    "turbo": "^2.7.2",
     "typescript": "catalog:",
     "vite": "^8.0.0-beta.5",
     "vite-plugin-inspect": "catalog:",
