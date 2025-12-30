@@ -578,11 +578,11 @@ const InternalTable = defineComponent<
       const mergedGetPopupContainer = props.getPopupContainer || contextGetPopupContainer
       const renderFilterDropdown = slots.filterDropdown
         ? (ctx: FilterDropdownProps & { column: ColumnType }) =>
-            getSlotPropsFnRun(slots, props as any, 'filterDropdown', true, ctx)
+            getSlotPropsFnRun(slots, props as any, 'filterDropdown', false, ctx)
         : undefined
       const renderFilterIcon = slots.filterIcon
         ? (ctx: { column: ColumnType, filtered: boolean }) =>
-            getSlotPropsFnRun(slots, props as any, 'filterIcon', true, ctx)
+            getSlotPropsFnRun(slots, props as any, 'filterIcon', false, ctx)
         : undefined
       const [transformFilterColumns] = useFilter({
         prefixCls: prefixCls.value,

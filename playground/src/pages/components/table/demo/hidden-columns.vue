@@ -17,27 +17,49 @@ interface DataType {
   address: string
 }
 
-const allColumns: TableProps['columns'] = [
-  { title: 'Name', dataIndex: 'name', key: 'name' },
-  { title: 'Age', dataIndex: 'age', key: 'age' },
-  { title: 'Address', dataIndex: 'address', key: 'address' },
+const baseColumns: TableProps['columns'] = [
+  { title: 'Column 1', dataIndex: 'address', key: '1' },
+  { title: 'Column 2', dataIndex: 'address', key: '2' },
+  { title: 'Column 3', dataIndex: 'address', key: '3' },
+  { title: 'Column 4', dataIndex: 'address', key: '4' },
+  { title: 'Column 5', dataIndex: 'address', key: '5' },
+  { title: 'Column 6', dataIndex: 'address', key: '6' },
+  { title: 'Column 7', dataIndex: 'address', key: '7' },
+  { title: 'Column 8', dataIndex: 'address', key: '8' },
 ]
 
-const options = allColumns.map(col => ({ label: col?.title as string, value: col?.key as string }))
-const checkedList = ref(options.map(opt => opt.value))
+const defaultCheckedList = baseColumns.map(item => item?.key as string)
+const checkedList = ref<string[]>(defaultCheckedList)
 
-const columns = computed(() => allColumns.filter(col => checkedList.value.includes(col?.key as string)))
+const options = baseColumns.map(({ key, title }) => ({
+  label: title as string,
+  value: key as string,
+}))
+
+const columns = computed(() =>
+  baseColumns.map(item => ({
+    ...item,
+    hidden: !checkedList.value.includes(item?.key as string),
+  })),
+)
 
 const dataSource: DataType[] = [
-  { key: '1', name: 'John Brown', age: 32, address: 'New York No. 1 Lake Park' },
-  { key: '2', name: 'Jim Green', age: 42, address: 'London No. 1 Lake Park' },
-  { key: '3', name: 'Joe Black', age: 32, address: 'Sydney No. 1 Lake Park' },
+  { key: '1', name: 'John Brown', age: 32, address: 'New York Park' },
+  { key: '2', name: 'Jim Green', age: 40, address: 'London Park' },
 ]
 </script>
 
 <template>
-  <a-space direction="vertical" style="width: 100%" size="middle">
-    <a-checkbox-group v-model:value="checkedList" :options="options" />
-    <a-table :columns="columns" :data-source="dataSource" />
-  </a-space>
+  <div>
+    <a-divider>Columns displayed</a-divider>
+    <a-checkbox-group
+      v-model:value="checkedList"
+      :options="options"
+    />
+    <a-table
+      :columns="columns"
+      :data-source="dataSource"
+      :style="{ marginTop: '24px' }"
+    />
+  </div>
 </template>

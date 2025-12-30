@@ -34,7 +34,7 @@ const columns: TableProps['columns'] = [
         ],
       },
     ],
-    onFilter: (value, record) => record.name.startsWith(String(value)),
+    onFilter: (value, record) => record.name.indexOf(String(value)) === 0,
     sorter: (a, b) => a.name.length - b.name.length,
     sortDirections: ['descend'],
   },
@@ -53,7 +53,7 @@ const columns: TableProps['columns'] = [
       { text: 'London', value: 'London' },
       { text: 'New York', value: 'New York' },
     ],
-    onFilter: (value, record) => record.address.startsWith(String(value)),
+    onFilter: (value, record) => record.address.indexOf(String(value)) === 0,
   },
 ]
 

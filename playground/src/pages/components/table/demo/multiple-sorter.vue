@@ -12,8 +12,9 @@ import type { TableProps } from 'antdv-next'
 interface DataType {
   key: string
   name: string
-  age: number
-  address: string
+  chinese: number
+  math: number
+  english: number
 }
 
 const columns: TableProps['columns'] = [
@@ -21,38 +22,48 @@ const columns: TableProps['columns'] = [
     title: 'Name',
     dataIndex: 'name',
     key: 'name',
+  },
+  {
+    title: 'Chinese Score',
+    dataIndex: 'chinese',
+    key: 'chinese',
     sorter: {
-      compare: (a, b) => a.name.length - b.name.length,
+      compare: (a, b) => a.chinese - b.chinese,
       multiple: 3,
     },
   },
   {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
+    title: 'Math Score',
+    dataIndex: 'math',
+    key: 'math',
     sorter: {
-      compare: (a, b) => a.age - b.age,
+      compare: (a, b) => a.math - b.math,
       multiple: 2,
     },
   },
   {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
+    title: 'English Score',
+    dataIndex: 'english',
+    key: 'english',
     sorter: {
-      compare: (a, b) => a.address.length - b.address.length,
+      compare: (a, b) => a.english - b.english,
       multiple: 1,
     },
   },
 ]
 
 const dataSource: DataType[] = [
-  { key: '1', name: 'John Brown', age: 32, address: 'New York No. 1 Lake Park' },
-  { key: '2', name: 'Jim Green', age: 42, address: 'London No. 1 Lake Park' },
-  { key: '3', name: 'Joe Black', age: 32, address: 'Sydney No. 1 Lake Park' },
+  { key: '1', name: 'John Brown', chinese: 98, math: 60, english: 70 },
+  { key: '2', name: 'Jim Green', chinese: 98, math: 66, english: 89 },
+  { key: '3', name: 'Joe Black', chinese: 98, math: 90, english: 70 },
+  { key: '4', name: 'Jim Red', chinese: 88, math: 99, english: 89 },
 ]
+
+const onChange: TableProps['onChange'] = (pagination, filters, sorter, extra) => {
+  console.log('params', pagination, filters, sorter, extra)
+}
 </script>
 
 <template>
-  <a-table :columns="columns" :data-source="dataSource" />
+  <a-table :columns="columns" :data-source="dataSource" @change="onChange" />
 </template>

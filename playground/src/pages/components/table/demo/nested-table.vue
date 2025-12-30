@@ -8,13 +8,14 @@ Nested table.
 
 <script setup lang="ts">
 import type { TableProps } from 'antdv-next'
+import { DownOutlined } from '@antdv-next/icons'
 import { h, resolveComponent } from 'vue'
 
 interface ExpandedDataType {
   key: string
   date: string
   name: string
-  status: string
+  upgradeNum: string
 }
 
 interface DataType {
@@ -27,10 +28,17 @@ interface DataType {
   createdAt: string
 }
 
-const innerColumns: TableProps['columns'] = [
+const items = [
+  { key: '1', label: 'Action 1' },
+  { key: '2', label: 'Action 2' },
+]
+
+const expandColumns: TableProps['columns'] = [
   { title: 'Date', dataIndex: 'date', key: 'date' },
   { title: 'Name', dataIndex: 'name', key: 'name' },
-  { title: 'Status', dataIndex: 'status', key: 'status' },
+  { title: 'Status', key: 'state' },
+  { title: 'Upgrade Status', dataIndex: 'upgradeNum', key: 'upgradeNum' },
+  { title: 'Action', key: 'operation' },
 ]
 
 const columns: TableProps['columns'] = [
@@ -39,50 +47,102 @@ const columns: TableProps['columns'] = [
   { title: 'Version', dataIndex: 'version', key: 'version' },
   { title: 'Upgraded', dataIndex: 'upgradeNum', key: 'upgradeNum' },
   { title: 'Creator', dataIndex: 'creator', key: 'creator' },
-  { title: 'Created At', dataIndex: 'createdAt', key: 'createdAt' },
+  { title: 'Date', dataIndex: 'createdAt', key: 'createdAt' },
+  { title: 'Action', key: 'operation' },
 ]
 
-const dataSource: DataType[] = [
-  {
-    key: '1',
-    name: 'Screem',
-    platform: 'iOS',
-    version: '10.3.4.5654',
-    upgradeNum: 500,
-    creator: 'Jack',
-    createdAt: '2014-12-24 23:12:00',
-  },
-  {
-    key: '2',
-    name: 'Screem',
-    platform: 'iOS',
-    version: '10.3.4.5654',
-    upgradeNum: 500,
-    creator: 'Jack',
-    createdAt: '2014-12-24 23:12:00',
-  },
-]
+const expandDataSource: ExpandedDataType[] = Array.from({ length: 3 }).map((_, i) => ({
+  key: String(i),
+  date: '2014-12-24 23:12:00',
+  name: 'This is production name',
+  upgradeNum: 'Upgraded: 56',
+}))
+
+const dataSource: DataType[] = Array.from({ length: 3 }).map((_, i) => ({
+  key: String(i),
+  name: 'Screen',
+  platform: 'iOS',
+  version: '10.3.4.5654',
+  upgradeNum: 500,
+  creator: 'Jack',
+  createdAt: '2014-12-24 23:12:00',
+}))
 
 const ATable = resolveComponent('ATable') as any
+const ABadge = resolveComponent('ABadge') as any
+const ADropdown = resolveComponent('ADropdown') as any
+const ASpace = resolveComponent('ASpace') as any
 
-function expandedRowRender() {
-  const innerData: ExpandedDataType[] = [
-    { key: '1', date: '2014-12-24', name: 'This is production name', status: 'Finished' },
-    { key: '2', date: '2014-12-25', name: 'This is production name', status: 'Finished' },
-  ]
-  return h(ATable, {
-    columns: innerColumns,
-    dataSource: innerData,
+const renderInnerBodyCell = ({ column }: { column: any }) => {
+  if (column.key === 'state') {
+    return h(ABadge, { status: 'success', text: 'Finished' })
+  }
+  if (column.key === 'operation') {
+    return h(ASpace, { size: 'middle' }, {
+      default: () => [
+        h('a', 'Pause'),
+        h('a', 'Stop'),
+        h(
+          ADropdown,
+          { menu: { items } },
+          { default: () => h('a', ['More ', h(DownOutlined)]) },
+        ),
+      ],
+    })
+  }
+  return undefined
+}
+
+const renderOuterBodyCell = ({ column }: { column: any }) => {
+  if (column.key === 'operation') {
+    return h('a', 'Publish')
+  }
+  return undefined
+}
+
+const innerTableSlots = {
+  bodyCell: renderInnerBodyCell,
+}
+
+const tableSlots = {
+  bodyCell: renderOuterBodyCell,
+}
+
+const expandedRowRender = () => h(
+  ATable,
+  {
+    columns: expandColumns,
+    dataSource: expandDataSource,
     pagination: false,
-    size: 'small',
-  })
+  },
+  innerTableSlots,
+)
+
+const expandable = {
+  expandedRowRender,
+  defaultExpandedRowKeys: ['0'],
 }
 </script>
 
 <template>
   <ATable
+    v-slots="tableSlots"
     :columns="columns"
     :data-source="dataSource"
-    :expanded-row-render="expandedRowRender"
+    :expandable="expandable"
+  />
+  <ATable
+    v-slots="tableSlots"
+    :columns="columns"
+    :data-source="dataSource"
+    :expandable="expandable"
+    size="middle"
+  />
+  <ATable
+    v-slots="tableSlots"
+    :columns="columns"
+    :data-source="dataSource"
+    :expandable="expandable"
+    size="small"
   />
 </template>

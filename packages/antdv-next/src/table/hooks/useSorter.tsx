@@ -118,7 +118,6 @@ function injectSorter<RecordType extends AnyObject = AnyObject>(prefixCls: strin
       const sorterState = sorterStates.find(({ key }) => key === columnKey)
       const sortOrder = sorterState ? sorterState.sortOrder : null
       const nextSortOrder = nextSortDirection(sortDirections, sortOrder)
-
       let sorter: any
       if (column.sortIcon) {
         sorter = column.sortIcon({ sortOrder })

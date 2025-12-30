@@ -17,20 +17,26 @@ interface DataType {
 }
 
 const columns: TableProps['columns'] = [
-  { title: 'Name', dataIndex: 'name', key: 'name', width: 120 },
-  { title: 'Age', dataIndex: 'age', key: 'age', width: 80 },
-  { title: 'Address', dataIndex: 'address', key: 'address', width: 200 },
+  { title: 'Name', dataIndex: 'name', key: 'name' },
+  { title: 'Age', dataIndex: 'age', key: 'age' },
+  { title: 'Address', dataIndex: 'address', key: 'address' },
 ]
 
-const dataSource: DataType[] = [
-  { key: '1', name: 'John Brown', age: 32, address: 'New York No. 1 Lake Park' },
-  { key: '2', name: 'Jim Green', age: 42, address: 'London No. 1 Lake Park' },
-  { key: '3', name: 'Joe Black', age: 32, address: 'Sydney No. 1 Lake Park' },
-]
+const dataSource: DataType[] = Array.from({ length: 200 }).map((_, key) => ({
+  key: String(key),
+  name: 'Sample Name',
+  age: 30 + (key % 5),
+  address: `Sample Address ${key}`,
+}))
 </script>
 
 <template>
-  <div style="max-width: 420px">
-    <a-table :columns="columns" :data-source="dataSource" :scroll="{ x: 420 }" />
+  <div style="width: 300px">
+    <a-table
+      :columns="columns"
+      :data-source="dataSource"
+      size="small"
+      :pagination="{ defaultCurrent: 13 }"
+    />
   </div>
 </template>
