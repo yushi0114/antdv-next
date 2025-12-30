@@ -12,7 +12,7 @@ group:
   order: 5
 ---
 
-<DocHeading :frontmatter></DocHeading>
+<DocHeading></DocHeading>
 
 ## 何时使用 {#when-to-use}
 
@@ -38,24 +38,24 @@ group:
 
 通用属性参考：[通用属性](/docs/vue/common-props)
 
-| 参数 | 说明 | 类型 | 默认值 | 版本 |
-| :-- | :-- | :-- | :-- | :-- |
-| value | 扫描后的文本 | `string \| string[]` | `string[]` | |
-| type | 渲染类型 | `canvas \| svg` | `canvas` | |
-| icon | 二维码中图片的地址（目前只支持图片地址） | string | - | |
-| size | 二维码大小 | number | 160 | |
-| iconSize | 二维码中图片的大小 | number \| { width: number; height: number } | 40 | |
-| color | 二维码颜色 | string | `#000` | |
-| classNames | 用于自定义组件内部各语义化结构的 class，支持对象或函数 | Record<[SemanticDOM](#semantic-dom), string> \| (info: { props })=> Record<[SemanticDOM](#semantic-dom), string> | - | |
-| bgColor | 二维码背景颜色 | string | `transparent` | |
-| bordered | 是否有边框 | boolean | `true` | |
-| errorLevel | 二维码纠错等级 | `'L' \| 'M' \| 'Q' \| 'H'` | `M` | |
-| boostLevel | 如果启用，自动提升纠错等级，结果的纠错级别可能会高于指定的纠错级别 | `boolean` | true | |
-| status | 二维码状态 | `active \| expired \| loading \| scanned` | `active` | |
+| 参数           | 说明 | 类型 | 默认值 | 版本 |
+|:-------------| :-- | :-- | :-- | :-- |
+| value        | 扫描后的文本 | `string \| string[]` | `string[]` | |
+| type         | 渲染类型 | `canvas \| svg` | `canvas` | |
+| icon         | 二维码中图片的地址（目前只支持图片地址） | string | - | |
+| size         | 二维码大小 | number | 160 | |
+| iconSize     | 二维码中图片的大小 | number \| { width: number; height: number } | 40 | |
+| color        | 二维码颜色 | string | `#000` | |
+| classes      | 用于自定义组件内部各语义化结构的 class，支持对象或函数 | Record<[SemanticDOM](#semantic-dom), string> \| (info: { props })=> Record<[SemanticDOM](#semantic-dom), string> | - | |
+| bgColor      | 二维码背景颜色 | string | `transparent` | |
+| bordered     | 是否有边框 | boolean | `true` | |
+| errorLevel   | 二维码纠错等级 | `'L' \| 'M' \| 'Q' \| 'H'` | `M` | |
+| boostLevel   | 如果启用，自动提升纠错等级，结果的纠错级别可能会高于指定的纠错级别 | `boolean` | true | |
+| status       | 二维码状态 | `active \| expired \| loading \| scanned` | `active` | |
 | statusRender | 自定义状态渲染器 | (info: [StatusRenderInfo](/components/qr-code-cn#statusrenderinfo)) => React.ReactNode | - | |
-| styles | 用于自定义组件内部各语义化结构的行内 style，支持对象或函数 | Record<[SemanticDOM](#semantic-dom), CSSProperties> \| (info: { props })=> Record<[SemanticDOM](#semantic-dom), CSSProperties> | - | |
-| type | 渲染类型 | `canvas \| svg` | `canvas` | |
-| value | 扫描后的文本 | string | - | |
+| styles       | 用于自定义组件内部各语义化结构的行内 style，支持对象或函数 | Record<[SemanticDOM](#semantic-dom), CSSProperties> \| (info: { props })=> Record<[SemanticDOM](#semantic-dom), CSSProperties> | - | |
+| type         | 渲染类型 | `canvas \| svg` | `canvas` | |
+| value        | 扫描后的文本 | string | - | |
 
 ### StatusRenderInfo
 

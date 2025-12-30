@@ -6,7 +6,7 @@ demo:
   cols: 2
 ---
 
-<DocHeading :frontmatter></DocHeading>
+<DocHeading></DocHeading>
 
 ## 何时使用 {#when-to-use}
 
