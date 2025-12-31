@@ -13,61 +13,70 @@ import { computed, ref } from 'vue'
 interface DataType {
   key: string
   name: string
+  age: number
+  address: string
   children?: DataType[]
 }
 
-const dataSetA: DataType[] = [
-  {
-    key: '1',
-    name: 'Parent A',
-    children: [
-      { key: '1-1', name: 'Child A-1' },
-      { key: '1-2', name: 'Child A-2' },
-    ],
-  },
-  {
-    key: '2',
-    name: 'Parent B',
-    children: [{ key: '2-1', name: 'Child B-1' }],
-  },
-]
-
-const dataSetB: DataType[] = [
-  {
-    key: '1',
-    name: 'Parent A',
-    children: [{ key: '1-1', name: 'Child A-1' }],
-  },
-  {
-    key: '3',
-    name: 'Parent C',
-    children: [{ key: '3-1', name: 'Child C-1' }],
-  },
-]
-
-const useAltData = ref(false)
-const selectedRowKeys = ref<string[]>([])
-
-const dataSource = computed(() => (useAltData.value ? dataSetB : dataSetA))
-
 const columns: TableProps['columns'] = [
   { title: 'Name', dataIndex: 'name', key: 'name' },
+  { title: 'Age', dataIndex: 'age', key: 'age', width: '12%' },
+  { title: 'Address', dataIndex: 'address', key: 'address', width: '30%' },
 ]
 
+const dataSource = Array.from({ length: 15 }).map<DataType>((_, i) => ({
+  key: `key${i}`,
+  name: `Edward ${i}`,
+  age: 32,
+  address: `London Park no. ${i}`,
+  children: [
+    {
+      key: `subKey${i}1`,
+      name: 'Brown',
+      age: 16,
+      address: 'New York No. 3 Lake Park',
+    },
+    {
+      key: `subKey${i}2`,
+      name: 'Jimmy',
+      age: 16,
+      address: 'New York No. 3 Lake Park',
+    },
+  ],
+}))
+
+const checkStrictly = ref(false)
+const preserveSelectedRowKeys = ref(true)
+
 const rowSelection = computed<TableProps['rowSelection']>(() => ({
-  selectedRowKeys: selectedRowKeys.value,
-  preserveSelectedRowKeys: true,
-  onChange: (keys) => {
-    selectedRowKeys.value = keys as string[]
+  checkStrictly: checkStrictly.value,
+  preserveSelectedRowKeys: preserveSelectedRowKeys.value,
+  onChange: (selectedRowKeys, selectedRows, info) => {
+    console.log(
+      `selectedRowKeys: ${selectedRowKeys}`,
+      'selectedRows: ',
+      selectedRows,
+      'info',
+      info,
+    )
+  },
+  onSelect: (record, selected, selectedRows) => {
+    console.log(record, selected, selectedRows)
   },
 }))
 </script>
 
 <template>
-  <a-space direction="vertical" size="middle" style="width: 100%">
-    <a-button @click="useAltData = !useAltData">
-      Switch data
-    </a-button>
-    <a-table :columns="columns" :data-source="dataSource" :row-selection="rowSelection" />
+  <a-space align="center" style="margin-bottom: 16px">
+    CheckStrictly:
+    <a-switch v-model:checked="checkStrictly" />
+    preserveSelectedRowKeys:
+    <a-switch v-model:checked="preserveSelectedRowKeys" />
   </a-space>
+  <a-table
+    :columns="columns"
+    :data-source="dataSource"
+    :row-selection="rowSelection"
+    :pagination="{ defaultPageSize: 5 }"
+  />
 </template>
