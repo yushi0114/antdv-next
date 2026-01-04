@@ -1,18 +1,18 @@
 import type { Locale } from '.'
 
 import Pagination from '@v-c/pagination/locale/en_US'
-// import Calendar from '../calendar/locale/en_US';
-// import DatePicker from '../date-picker/locale/en_US';
-// import TimePicker from '../time-picker/locale/en_US';
+import Calendar from '../calendar/locale/en_US'
+import DatePicker from '../date-picker/locale/en_US'
+import TimePicker from '../time-picker/locale/en_US'
 
 const typeTemplate = '${label} is not a valid ${type}'
 
 const localeValues: Locale = {
   locale: 'en',
   Pagination,
-  // DatePicker,
-  // TimePicker,
-  // Calendar,
+  DatePicker,
+  TimePicker,
+  Calendar,
   global: {
     placeholder: 'Please select',
     close: 'Close',

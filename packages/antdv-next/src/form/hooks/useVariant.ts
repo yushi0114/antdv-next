@@ -14,9 +14,9 @@ type VariantComponents = keyof Pick<
   | 'select'
   | 'cascader'
   | 'treeSelect'
-  // | 'datePicker'
-  // | 'timePicker'
-  // | 'rangePicker'
+  | 'datePicker'
+  | 'timePicker'
+  | 'rangePicker'
   | 'card'
 >
 

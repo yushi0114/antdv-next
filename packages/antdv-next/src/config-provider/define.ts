@@ -19,6 +19,8 @@ import type {
   InputSearchConfig,
   MentionsConfig,
   MenuConfig,
+  DatePickerConfig,
+  RangePickerConfig,
   NotificationConfig,
   OTPConfig,
   PaginationConfig,
@@ -33,6 +35,7 @@ import type {
   TextAreaConfig,
   ThemeConfig,
   TooltipConfig,
+  TimePickerConfig,
   TransferConfig,
   TreeSelectConfig,
   Variant,
@@ -124,13 +127,13 @@ export interface ConfigProviderProps {
   card?: CardConfig
   tabs?: TabsConfig
   timeline?: ComponentStyleConfig
-  // timePicker?: TimePickerConfig;
+  timePicker?: TimePickerConfig
   // upload?: UploadConfig;
   notification?: NotificationConfig
   tree?: ComponentStyleConfig
   colorPicker?: ComponentStyleConfig
-  // datePicker?: DatePickerConfig;
-  // rangePicker?: RangePickerConfig;
+  datePicker?: DatePickerConfig
+  rangePicker?: RangePickerConfig
   dropdown?: ComponentStyleConfig
   flex?: FlexConfig
   // /**

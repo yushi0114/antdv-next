@@ -50,7 +50,9 @@ import type { SwitchProps } from '../switch'
 import type { TableProps } from '../table'
 import type { TabsProps } from '../tabs'
 import type { TagProps } from '../tag'
+import type { DatePickerProps, RangePickerProps } from '../date-picker'
 import type { AliasToken, MapToken, OverrideToken, SeedToken } from '../theme/interface'
+import type { TimePickerProps } from '../time-picker'
 import type { TooltipProps } from '../tooltip'
 import type { TourProps } from '../tour'
 import type { TransferProps } from '../transfer/interface'
@@ -359,6 +361,15 @@ export type TreeSelectConfig = ComponentStyleConfig
 export type UploadConfig = ComponentStyleConfig
   & Pick<UploadProps, 'classes' | 'styles' | 'customRequest'>
 
+export type DatePickerConfig = ComponentStyleConfig
+  & Pick<DatePickerProps, 'classes' | 'styles' | 'variant'>
+
+export type RangePickerConfig = ComponentStyleConfig
+  & Pick<RangePickerProps, 'classes' | 'styles' | 'variant'>
+
+export type TimePickerConfig = ComponentStyleConfig
+  & Pick<TimePickerProps, 'classes' | 'styles' | 'variant'>
+
 export interface TableConfig<RecordType extends AnyObject = AnyObject>
   extends ComponentStyleConfig {
   expandable?: {
@@ -424,7 +435,7 @@ export interface ConfigComponentProps {
   cardMeta?: CardMetaConfig
   tabs?: TabsConfig
   timeline?: ComponentStyleConfig
-  // timePicker?: TimePickerConfig;
+  timePicker?: TimePickerConfig
   tour?: TourConfig
   tooltip?: TooltipConfig
   popover?: PopoverConfig
@@ -433,8 +444,8 @@ export interface ConfigComponentProps {
   notification?: NotificationConfig
   tree?: TreeConfig
   colorPicker?: ComponentStyleConfig
-  // datePicker?: DatePickerConfig;
-  // rangePicker?: RangePickerConfig;
+  datePicker?: DatePickerConfig
+  rangePicker?: RangePickerConfig
   dropdown?: ComponentStyleConfig
   flex?: FlexConfig
   qrcode?: QRcodeConfig

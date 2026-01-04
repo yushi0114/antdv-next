@@ -1,5 +1,41 @@
-import type { Locale as VcPickerLocale } from '@v-c/picker'
+import type {
+  PickerRef,
+  Locale as VcPickerLocale,
+  PickerProps as VcPickerProps,
+  RangePickerProps as VcRangePickerProps,
+} from '@v-c/picker'
+import type { CSSProperties } from 'vue'
+import type {
+  SemanticClassNames,
+  SemanticClassNamesType,
+  SemanticStyles,
+  SemanticStylesType,
+} from '../../_util/hooks'
+import type { InputStatus } from '../../_util/statusUtils'
+import type { AnyObject } from '../../_util/type'
+import type { Variant } from '../../config-provider/context'
+import type { SizeType } from '../../config-provider/SizeContext'
 import type { TimePickerLocale } from '../../time-picker'
+
+const _DataPickerPlacements = ['bottomLeft', 'bottomRight', 'topLeft', 'topRight'] as const
+
+type DataPickerPlacement = (typeof _DataPickerPlacements)[number]
+
+type PickerSemanticName = 'root' | 'prefix' | 'input' | 'suffix'
+
+type PopupSemanticName = 'root' | 'header' | 'body' | 'content' | 'item' | 'footer' | 'container'
+
+export type DatePickerClassNamesType<P> = SemanticClassNamesType<
+  InjectDefaultProps<P>,
+  PickerSemanticName,
+  { popup?: string | SemanticClassNames<PopupSemanticName> }
+>
+
+export type DatePickerStylesType<P> = SemanticStylesType<
+  InjectDefaultProps<P>,
+  PickerSemanticName,
+  { popup?: SemanticStyles<PopupSemanticName> }
+>
 
 export type PickerLocale = {
   lang: VcPickerLocale & AdditionalPickerLocaleLangProps
@@ -42,3 +78,95 @@ export interface AdditionalPickerLocaleLangProps {
   rangeWeekPlaceholder?: [string, string]
   rangePlaceholder?: [string, string]
 }
+
+export type RequiredSemanticPicker = Readonly<
+  [
+    classNames: SemanticClassNames<PickerSemanticName> & { popup: SemanticClassNames<PopupSemanticName> },
+    styles: SemanticStyles<PickerSemanticName> & { popup: SemanticStyles<PopupSemanticName> },
+  ]
+>
+
+type RcEventKeys
+  = | 'onChange'
+    | 'onCalendarChange'
+    | 'onPanelChange'
+    | 'onOpenChange'
+    | 'onOk'
+    | 'onSelect'
+    | 'onFocus'
+    | 'onBlur'
+    | 'onKeyDown'
+    | 'onClick'
+    | 'onMouseDown'
+    | 'onMouseEnter'
+    | 'onMouseLeave'
+
+export type InjectDefaultProps<Props> = Omit<
+  Props,
+  'locale' | 'generateConfig' | 'hideHeader' | 'classNames' | 'styles' | RcEventKeys | 'className' | 'style' | 'rootClassName'
+> & {
+  locale?: PickerLocale
+  size?: SizeType
+  placement?: DataPickerPlacement
+  /** @deprecated Use `variant` instead */
+  bordered?: boolean
+  status?: InputStatus
+  /**
+   * @since 5.13.0
+   * @default "outlined"
+   */
+  variant?: Variant
+  /**
+   * @deprecated `dropdownClassName` is deprecated which will be removed in next major
+   *   version.Please use `classes.popup.root` instead.
+   */
+  dropdownClassName?: string
+  /**
+   * @deprecated please use `classes.popup.root` instead
+   */
+  popupClassName?: string
+  rootClass?: string
+  /**
+   * @deprecated please use `styles.popup.root` instead
+   */
+  popupStyle?: CSSProperties
+  classes?: DatePickerClassNamesType<Props>
+  styles?: DatePickerStylesType<Props>
+}
+
+/** Base Single Picker props */
+export type PickerProps<DateType extends AnyObject = any> = InjectDefaultProps<
+  VcPickerProps<DateType>
+>
+
+/** Base Range Picker props */
+export type RangePickerProps<DateType extends AnyObject = any> = InjectDefaultProps<
+  VcRangePickerProps<DateType>
+>
+
+export type GenericTimePickerProps<DateType extends AnyObject = any> = Omit<
+  PickerProps<DateType>,
+  'picker' | 'showTime'
+>
+
+type MultiValueType<ValueType, IsMultiple extends boolean = false> = IsMultiple extends true
+  ? ValueType[]
+  : ValueType
+
+/**
+ * Single Picker has the `multiple` prop,
+ * which will make the `value` be `DateType[]` type.
+ * Here to be a generic which accept the `ValueType` for developer usage.
+ */
+export type PickerPropsWithMultiple<
+  DateType extends AnyObject = any,
+  InnerPickerProps extends PickerProps<DateType> = PickerProps<DateType>,
+  ValueType = DateType,
+  IsMultiple extends boolean = false,
+> = Omit<InnerPickerProps, 'defaultValue' | 'value' | 'onChange' | 'onOk'> & {
+  multiple?: IsMultiple
+  defaultValue?: MultiValueType<ValueType, IsMultiple> | null
+  value?: MultiValueType<ValueType, IsMultiple> | null
+}
+
+export type { PickerRef }

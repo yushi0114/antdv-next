@@ -79,6 +79,7 @@
     "@v-c/util": "catalog:",
     "@v-c/virtual-list": "^1.0.5",
     "@vueuse/core": "catalog:",
+    "dayjs": "^1.11.19",
     "defu": "catalog:",
     "es-toolkit": "catalog:",
     "scroll-into-view-if-needed": "catalog:"

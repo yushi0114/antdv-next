@@ -1,6 +1,8 @@
 import type { InjectionKey, Ref } from 'vue'
 import type { TransferLocale as TransferLocaleForEmpty } from '../empty'
 import type { PaginationLocale } from '../pagination/interface.ts'
+import type { PickerLocale as DatePickerLocale } from '../date-picker'
+import type { TimePickerLocale } from '../time-picker'
 import type { PopconfirmLocale } from '../popconfirm/PurePanel'
 import type { TourLocale } from '../tour/interface.ts'
 import type { TransferLocale } from '../transfer/interface.ts'
@@ -22,9 +24,9 @@ export interface LocaleProviderProps {
 export interface Locale {
   locale: string
   Pagination?: PaginationLocale
-  // DatePicker?: DatePickerLocale;
-  TimePicker?: Record<string, any>
-  Calendar?: Record<string, any>
+  DatePicker?: DatePickerLocale
+  TimePicker?: TimePickerLocale
+  Calendar?: DatePickerLocale
   // Table?: TableLocale;
   // Modal?: ModalLocale;
   Tour?: TourLocale
