@@ -30,7 +30,7 @@
       "default": "./dist/locale/*.js"
     },
     "./global.d.ts": "./global.d.ts",
-    "./global": "./dist/global.d.ts",
+    "./global": "./global.d.ts",
     "./dist/reset.css": "./dist/reset.css",
     "./package.json": "./package.json"
   },
