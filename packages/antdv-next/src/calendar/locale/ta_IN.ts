@@ -1,3 +1,3 @@
-import taIN from '../../date-picker/locale/ta_IN';
+import taIN from '../../date-picker/locale/ta_IN'
 
-export default taIN;
+export default taIN

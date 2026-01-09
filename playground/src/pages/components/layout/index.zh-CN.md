@@ -10,7 +10,6 @@ coverDark: https://mdn.alipayobjects.com/huamei_7uahnr/afts/img/A*HdS6Q5vUCDcAAA
 
 <DocHeading></DocHeading>
 
-
 ## 设计规则
 
 ### 尺寸
@@ -87,7 +86,6 @@ coverDark: https://mdn.alipayobjects.com/huamei_7uahnr/afts/img/A*HdS6Q5vUCDcAAA
 </a-layout>
 ```
 
-
 ### Layout
 
 通用属性参考：[通用属性](/docs/vue/common-props)
@@ -114,15 +112,12 @@ coverDark: https://mdn.alipayobjects.com/huamei_7uahnr/afts/img/A*HdS6Q5vUCDcAAA
 | width | 宽度 | number \| string                              | 200 |
 | zeroWidthTriggerStyle | 指定当 `collapsedWidth` 为 0 时出现的特殊 trigger 的样式 | object                                        | - |
 
-
-
 #### 事件 {#layout-sider-events}
 
 | 参数         | 说明 | 类型                         | 默认值 |
 |------------| --- |----------------------------| --- |
 | breakpoint | 触发响应式布局[断点](/components/grid-cn#api)时的回调 | (broken) =\> \{\}          | - |
 | collapse   | 展开-收起时的回调函数，有点击 trigger 以及响应式反馈两种方式可以触发 | (collapsed, type) =\> \{\} | - |
-
 
 #### 插槽 {#layout-sider-slots}
 

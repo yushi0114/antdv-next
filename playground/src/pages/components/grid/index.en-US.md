@@ -65,9 +65,7 @@ Common props ref：[Common props](/docs/vue/common-props)
 | justify | Horizontal arrangement | `start` \| `end` \| `center` \| `space-around` \| `space-between` \| `space-evenly` \| `{[key in 'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'xxl']: 'start' \| 'end' \| 'center' \| 'space-around' \| 'space-between' \| 'space-evenly'}` | `start` |  |
 | wrap | Auto wrap line | boolean | true |  |
 
-
 ### Col
-
 
 | Property | Description | Type | Default | Version |
 | --- | --- | --- | --- | --- |
@@ -83,4 +81,3 @@ Common props ref：[Common props](/docs/vue/common-props)
 | lg | `screen ≥ 992px`, could be a `span` value or an object containing above props | number \| object | - |  |
 | xl | `screen ≥ 1200px`, could be a `span` value or an object containing above props | number \| object | - |  |
 | xxl | `screen ≥ 1600px`, could be a `span` value or an object containing above props | number \| object | - |  |
-

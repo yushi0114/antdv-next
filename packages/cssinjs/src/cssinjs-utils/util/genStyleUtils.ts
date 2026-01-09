@@ -307,26 +307,24 @@ function genStyleUtils<
       const prefix = usePrefix()
       const csp = useCSP()
 
-      const type = computed(() => cssVar?.value ? 'css' : 'js')
+      const type = 'css'
 
       // Use unique memo to share the result across all instances
       const calc = computed(() => {
         return useUniqueMemo(() => {
           const unitlessCssVar = new Set<string>()
-          if (cssVar) {
-            Object.keys(options.unitless || {}).forEach((key) => {
-              // Some component proxy the AliasToken (e.g. Image) and some not (e.g. Modal)
-              // We should both pass in `unitlessCssVar` to make sure the CSSVar can be unitless.
-              unitlessCssVar.add(token2CSSVar(key, cssVar.value.prefix))
-              unitlessCssVar.add(token2CSSVar(key, getCompVarPrefix(component, cssVar.value.prefix)))
-            })
-          }
+          Object.keys(options.unitless || {}).forEach((key) => {
+            // Some component proxy the AliasToken (e.g. Image) and some not (e.g. Modal)
+            // We should both pass in `unitlessCssVar` to make sure the CSSVar can be unitless.
+            unitlessCssVar.add(token2CSSVar(key, cssVar?.value?.prefix))
+            unitlessCssVar.add(token2CSSVar(key, getCompVarPrefix(component, cssVar?.value?.prefix)))
+          })
 
-          return genCalc(type.value, unitlessCssVar)
+          return genCalc(type, unitlessCssVar)
         }, [type, component, cssVar?.value?.prefix])
       })
 
-      const maxMinFunc = computed(() => genMaxMin(type.value))
+      const { max, min } = genMaxMin(type)
 
       // Shared config
       const sharedConfig = computed(() => {
@@ -392,11 +390,11 @@ function genStyleUtils<
             { deprecatedTokens: options.deprecatedTokens },
           )
 
-          if (cssVar && defaultComponentToken && typeof defaultComponentToken === 'object') {
+          if (defaultComponentToken && typeof defaultComponentToken === 'object') {
             Object.keys(defaultComponentToken).forEach((key) => {
               (defaultComponentToken as any)[key] = `var(${token2CSSVar(
                 key,
-                getCompVarPrefix(component, cssVar.value.prefix),
+                getCompVarPrefix(component, cssVar?.value?.prefix),
               )})`
             })
           }
@@ -408,10 +406,10 @@ function genStyleUtils<
               iconCls: `.${prefix.value.iconPrefixCls}`,
               antCls: `.${prefix.value.rootPrefixCls}`,
               calc: calc.value,
-              max: maxMinFunc.value.max,
-              min: maxMinFunc.value.min,
+              max,
+              min,
             },
-            cssVar?.value ? defaultComponentToken : componentToken,
+            defaultComponentToken,
           )
 
           const styleInterpolation = styleFn(mergedToken, {

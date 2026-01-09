@@ -1,3 +1,3 @@
-import bgBG from '../../date-picker/locale/bg_BG';
+import bgBG from '../../date-picker/locale/bg_BG'
 
-export default bgBG;
+export default bgBG

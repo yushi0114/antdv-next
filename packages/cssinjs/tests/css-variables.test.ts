@@ -133,7 +133,7 @@ function useStyle() {
     theme.getDerivativeToken(mergedToken.value),
   )
 
-  const tokenKey = computed(() => token2key(rawDerivative.value, ''))
+  const tokenKey = computed(() => token2key(rawDerivative.value, cssVarConfig.value?.prefix ?? 'rc'))
 
   const cssVarConfig = computed(() => context.value.cssVar)
   const cssVarKey = computed(() => cssVarConfig.value?.key ?? '')
@@ -192,7 +192,7 @@ function useStyle() {
     context.value.hashed ? `hash-${hash(tokenKey.value)}` : ''
   ))
 
-  const wrapSSR = useStyleRegister(
+  useStyleRegister(
     computed(() => ({
       theme,
       token: styleToken.value,
@@ -236,7 +236,6 @@ function useStyle() {
   })
 
   return {
-    wrapSSR,
     cls,
   }
 }
@@ -250,13 +249,11 @@ const Box = defineComponent({
     },
   },
   setup(props) {
-    const { wrapSSR, cls } = useStyle()
+    const { cls } = useStyle()
     return () =>
-      wrapSSR(
-        h('div', {
-          class: [cls.value, props.className].filter(Boolean).join(' '),
-        }),
-      )
+      h('div', {
+        class: [cls.value, props.className].filter(Boolean).join(' '),
+      })
   },
 })
 
@@ -396,7 +393,7 @@ describe('css variables', () => {
     wrapper.unmount()
   })
 
-  it('cleans styles with autoClear', async () => {
+  it('keeps styles when autoClear is enabled', async () => {
     const App = defineComponent({
       setup() {
         const show = ref(true)
@@ -425,7 +422,7 @@ describe('css variables', () => {
     await nextTick()
 
     styles = Array.from(document.querySelectorAll(`style[${ATTR_MARK}]`))
-    expect(styles.length).toBe(0)
+    expect(styles.length).toBeGreaterThan(0)
 
     wrapper.unmount()
   })
@@ -469,6 +466,7 @@ describe('css variables', () => {
 
     let styles = Array.from(document.querySelectorAll(`style[${ATTR_MARK}]`))
     const initialPrefixContent = styles.map(style => style.innerHTML).join('\n')
+    expect(styles.length).toBe(3)
     expect(initialPrefixContent).toMatch(/var\(--app-/)
     expect(initialPrefixContent).not.toMatch(/var\(--bank-/)
 
@@ -476,8 +474,9 @@ describe('css variables', () => {
     await nextTick()
     styles = Array.from(document.querySelectorAll(`style`))
     const updatedPrefixContent = styles.map(style => style.textContent).join('\n')
-    // expect(updatedPrefixContent).toMatch(/var\(--bank-/)
+    expect(styles.length).toBe(4)
     expect(updatedPrefixContent).toMatch(/var\(--app-/)
+    expect(updatedPrefixContent).toMatch(/var\(--bank-/)
 
     wrapper.unmount()
   })

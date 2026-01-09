@@ -1,6 +1,6 @@
 import type { Ref } from 'vue'
 import type { KeyType } from '../Cache'
-import { computed, nextTick, watch, watchEffect } from 'vue'
+import { computed, watch } from 'vue'
 import { pathKey } from '../Cache'
 import { useStyleContext } from '../StyleContext'
 
@@ -55,6 +55,8 @@ export function useGlobalCache<CacheType>(
 
   const getCacheEntity = () => styleContext.value.cache.opGet(fullPathStr.value)
 
+  buildCache()
+
   const cacheContent = computed(() => {
     let entity = styleContext.value.cache.opGet(fullPathStr.value)
 
@@ -69,23 +71,22 @@ export function useGlobalCache<CacheType>(
   // Initial cache creation - watch for keyPath changes
   watch(
     fullPathStr,
-    async (_, _1, onCleanup) => {
-      await nextTick()
-      // Build or retrieve cache
+    (_, _1, onCleanup) => {
+      const currentPath = fullPathStr.value
       buildCache(([times, cache]) => [times + 1, cache])
-      if (!effectMap.has(fullPathStr.value)) {
+      if (!effectMap.has(currentPath)) {
         onCacheEffect?.(cacheContent.value)
-        effectMap.set(fullPathStr.value, true)
+        effectMap.set(currentPath, true)
         // 微任务清理混存，可以认为是单次 batch render 中只触发一次 effect
         Promise.resolve().then(() => {
-          effectMap.delete(fullPathStr.value)
+          effectMap.delete(currentPath)
         })
       }
       const globalCache = styleContext.value.cache
 
       // Cleanup on unmount or when fullPathStr changes
       onCleanup(() => {
-        globalCache.opUpdate(fullPathStr.value, (prevCache) => {
+        globalCache.opUpdate(currentPath, (prevCache) => {
           // if (!prevCache)
           //   return null
           const [times = 0, cache] = prevCache || []
@@ -94,7 +95,7 @@ export function useGlobalCache<CacheType>(
           if (nextCount === 0) {
           // Last reference, remove cache
             onCacheRemove?.(cache, false)
-            effectMap.delete(fullPathStr.value)
+            effectMap.delete(currentPath)
             return null
           }
 
@@ -106,13 +107,6 @@ export function useGlobalCache<CacheType>(
       immediate: true,
     },
   )
-
-  // Trigger effect callback when cache is ready
-  if (onCacheEffect) {
-    watchEffect(() => {
-      onCacheEffect(cacheContent.value)
-    })
-  }
 
   return cacheContent
 }

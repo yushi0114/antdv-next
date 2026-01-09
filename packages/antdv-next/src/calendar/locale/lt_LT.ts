@@ -1,3 +1,3 @@
-import ltLT from '../../date-picker/locale/lt_LT';
+import ltLT from '../../date-picker/locale/lt_LT'
 
-export default ltLT;
+export default ltLT

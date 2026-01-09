@@ -1,5 +1,5 @@
-import type { Locale } from '.';
-import type { PickerLocale } from '../date-picker/generatePicker';
+import type { Locale } from '.'
+import type { PickerLocale } from '../date-picker/generatePicker'
 
 const datePickerLocale: PickerLocale = {
   lang: {
@@ -35,7 +35,7 @@ const datePickerLocale: PickerLocale = {
   timePickerLocale: {
     placeholder: 'Ընտրեք ժամը',
   },
-};
+}
 
 const localeValues: Locale = {
   locale: 'hy-am',
@@ -112,6 +112,6 @@ const localeValues: Locale = {
     copied: 'Պատճենվել է',
     expand: 'Տեսնել ավելին',
   },
-};
+}
 
-export default localeValues;
+export default localeValues

@@ -4,8 +4,8 @@ import type { ExtractStyle } from './useGlobalCache'
 import canUseDom from '@v-c/util/dist/Dom/canUseDom'
 import { removeCSS, updateCSS } from '@v-c/util/dist/Dom/dynamicCSS'
 import { computed } from 'vue'
-import { ATTR_MARK, ATTR_TOKEN, CSS_IN_JS_INSTANCE, useStyleContext } from '../StyleContext'
 import { collectStyleText } from '../ssr/styleCollector'
+import { ATTR_MARK, ATTR_TOKEN, CSS_IN_JS_INSTANCE, useStyleContext } from '../StyleContext'
 import { isClientSide, toStyleStr } from '../util'
 import { transformToken } from '../util/css-variables'
 import { useGlobalCache } from './useGlobalCache'
@@ -38,12 +38,13 @@ export default function useCSSVarRegister<V, T extends Record<string, V>>(
   const styleContext = useStyleContext()
 
   const stylePath = computed<any[]>(() => {
-    const { key, prefix, scope = '' } = config.value
+    const { key, scope = '', token } = config.value
+    const tokenKey = token?._tokenKey
     return [
       ...config.value.path,
       key,
-      prefix,
       scope,
+      tokenKey,
     ]
   })
 

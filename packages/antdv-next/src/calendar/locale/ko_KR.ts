@@ -1,3 +1,3 @@
-import koKR from '../../date-picker/locale/ko_KR';
+import koKR from '../../date-picker/locale/ko_KR'
 
-export default koKR;
+export default koKR

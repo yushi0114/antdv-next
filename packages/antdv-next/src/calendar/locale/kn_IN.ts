@@ -1,3 +1,3 @@
-import knIN from '../../date-picker/locale/kn_IN';
+import knIN from '../../date-picker/locale/kn_IN'
 
-export default knIN;
+export default knIN

@@ -1,3 +1,3 @@
-import caES from '../../date-picker/locale/ca_ES';
+import caES from '../../date-picker/locale/ca_ES'
 
-export default caES;
+export default caES

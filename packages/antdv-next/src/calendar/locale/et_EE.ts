@@ -1,3 +1,3 @@
-import etEE from '../../date-picker/locale/et_EE';
+import etEE from '../../date-picker/locale/et_EE'
 
-export default etEE;
+export default etEE

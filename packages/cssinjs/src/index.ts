@@ -14,17 +14,18 @@ import {
   NaNLinter,
   parentSelectorLinter,
 } from './linters'
+import { collectStyleText, setStyleCollector } from './ssr/styleCollector'
 import { createCache, StyleProvider, useStyleContext, useStyleContextProvide } from './StyleContext'
 import { createTheme, genCalc, Theme } from './theme'
 import autoPrefixTransformer from './transformers/autoPrefix'
 import legacyLogicalPropertiesTransformer from './transformers/legacyLogicalProperties'
 import px2remTransformer from './transformers/px2rem'
-import { collectStyleText, setStyleCollector } from './ssr/styleCollector'
 import { supportLogicProps, supportWhere, token2CSSVar, unit } from './util'
 
 export {
   // Transformer
   autoPrefixTransformer,
+  collectStyleText,
   createCache,
   createTheme,
   extractStyle,
@@ -36,10 +37,9 @@ export {
   // Linters
   logicalPropertiesLinter,
   NaNLinter,
-  parentSelectorLinter,
 
+  parentSelectorLinter,
   px2remTransformer,
-  collectStyleText,
   setStyleCollector,
   StyleProvider,
   Theme,

@@ -1,3 +1,3 @@
-import jaJP from '../../date-picker/locale/ja_JP';
+import jaJP from '../../date-picker/locale/ja_JP'
 
-export default jaJP;
+export default jaJP

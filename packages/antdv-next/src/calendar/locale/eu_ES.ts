@@ -1,3 +1,3 @@
-import euES from '../../date-picker/locale/eu_ES';
+import euES from '../../date-picker/locale/eu_ES'
 
-export default euES;
+export default euES

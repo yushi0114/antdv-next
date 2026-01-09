@@ -1,3 +1,3 @@
-import hrHR from '../../date-picker/locale/hr_HR';
+import hrHR from '../../date-picker/locale/hr_HR'
 
-export default hrHR;
+export default hrHR

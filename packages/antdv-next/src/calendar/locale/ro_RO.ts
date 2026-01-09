@@ -1,3 +1,3 @@
-import roRO from '../../date-picker/locale/ro_RO';
+import roRO from '../../date-picker/locale/ro_RO'
 
-export default roRO;
+export default roRO

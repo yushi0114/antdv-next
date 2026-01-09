@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { defineComponent, h, nextTick, ref } from 'vue'
 import useStyleRegister, { extract } from '../src/hooks/useStyleRegister'
-import { ATTR_MARK, ATTR_TOKEN } from '../src/StyleContext'
+import { ATTR_MARK } from '../src/StyleContext'
 import { mountWithStyleProvider } from './utils'
 
 describe('useStyleRegister', () => {
@@ -22,13 +22,13 @@ describe('useStyleRegister', () => {
           token,
           path: ['.box'],
         })
-        const wrapSSR = useStyleRegister(info, () => ({
+        useStyleRegister(info, () => ({
           '.box': {
             color: 'red',
           },
         }))
 
-        return () => wrapSSR(h('div', { class: 'box' }, 'content'))
+        return () => h('div', { class: 'box' }, 'content')
       },
     })
 
@@ -40,12 +40,10 @@ describe('useStyleRegister', () => {
     const matched = styles.find(style => style.innerHTML.includes('.box') && style.innerHTML.includes('color:red'))
 
     expect(matched).toBeTruthy()
-    expect(matched?.getAttribute(ATTR_TOKEN)).toBe('test-token')
-
     wrapper.unmount()
   })
 
-  it('renders inline style when mocked as server with ssrInline', async () => {
+  it('does not inject styles when mocked as server', async () => {
     const theme = {} as any
     const token = { _tokenKey: 'server-token' }
 
@@ -56,13 +54,13 @@ describe('useStyleRegister', () => {
           token,
           path: ['.server'],
         })
-        const wrapSSR = useStyleRegister(info, () => ({
+        useStyleRegister(info, () => ({
           '.server': {
             color: 'blue',
           },
         }))
 
-        return () => wrapSSR(h('div', { class: 'server' }, 'content'))
+        return () => h('div', { class: 'server' }, 'content')
       },
     })
 
@@ -73,11 +71,6 @@ describe('useStyleRegister', () => {
 
     await nextTick()
 
-    const inlineStyle = wrapper.find('style')
-    expect(inlineStyle.exists()).toBe(true)
-    expect(inlineStyle.attributes()[ATTR_TOKEN]).toBe('server-token')
-    expect(inlineStyle.text()).toContain('.server')
-
     // No style should be injected to document head in server mode
     expect(document.querySelector(`style[${ATTR_MARK}]`)).toBeNull()
 
@@ -87,7 +80,6 @@ describe('useStyleRegister', () => {
   it('extract returns serialized style string with effect cache tracking', () => {
     const cacheValue: any = [
       '.box{color:red;}',
-      'token-key',
       'style-id',
       {
         'global': '.global{color:green;}',

@@ -13,7 +13,6 @@ group:
 
 <DocHeading></DocHeading>
 
-
 ## When To Use
 
 Used when the text needs to be converted into a QR Code.

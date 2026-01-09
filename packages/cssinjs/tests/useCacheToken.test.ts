@@ -37,7 +37,16 @@ describe('useCacheToken', () => {
 
     const Demo = defineComponent({
       setup() {
-        cacheRef = useCacheToken<DerivativeToken, DesignToken>(theme, ref([() => baseToken.value]))
+        cacheRef = useCacheToken<DerivativeToken, DesignToken>(
+          theme,
+          ref([() => baseToken.value]),
+          computed(() => ({
+            cssVar: {
+              key: 'token-test',
+              prefix: 'token',
+            },
+          })),
+        )
         return () => h('div', { class: cacheRef.value[1] })
       },
     })
@@ -46,8 +55,8 @@ describe('useCacheToken', () => {
     await nextTick()
 
     const [token, hashId, realToken] = cacheRef!.value
-    expect(token.colorPrimary).toBe('#1677ff')
-    expect(token.borderRadius).toBe(2)
+    expect(token.colorPrimary).toBe('var(--token-color-primary)')
+    expect(token.borderRadius).toBe('var(--token-border-radius)')
     expect(hashId.startsWith('css-')).toBe(true)
     expect(realToken.colorPrimary).toBe('#1677ff')
 
@@ -58,9 +67,11 @@ describe('useCacheToken', () => {
 
     await nextTick()
 
-    const [nextToken] = cacheRef!.value
-    expect(nextToken.colorPrimary).toBe('#fa541c')
-    expect(nextToken.borderRadius).toBe(4)
+    const [nextToken, , nextRealToken] = cacheRef!.value
+    expect(nextToken.colorPrimary).toBe('var(--token-color-primary)')
+    expect(nextToken.borderRadius).toBe('var(--token-border-radius)')
+    expect(nextRealToken.colorPrimary).toBe('#fa541c')
+    expect(nextRealToken.borderRadius).toBe(4)
   })
 
   it('injects css variables and cleans up after unmount', async () => {
@@ -86,10 +97,10 @@ describe('useCacheToken', () => {
     const wrapper = mountWithStyleProvider(Demo)
     await nextTick()
 
-    const themeKey = cacheRef!.value[0]._themeKey
+    const themeKey = cacheRef!.value[4]
     expect(themeKey).toBe('demo-token')
 
-    const styleId = hash(`css-variables-${themeKey}`)
+    const styleId = hash(`css-var-${themeKey}`)
     const styleEl = document.querySelector<HTMLStyleElement>(`style[data-css-hash="${styleId}"]`)
     expect(styleEl).not.toBeNull()
     expect(styleEl?.textContent).toContain('--demo-color-primary:#1677ff;')
@@ -100,7 +111,8 @@ describe('useCacheToken', () => {
     }
     await nextTick()
 
-    expect(styleEl?.textContent).toContain('--demo-color-primary:#52c41a;')
+    const updatedStyleEl = document.querySelector<HTMLStyleElement>(`style[data-css-hash="${styleId}"]`)
+    expect(updatedStyleEl?.textContent).toContain('--demo-color-primary:#52c41a;')
 
     wrapper.unmount()
     await nextTick()
@@ -146,6 +158,10 @@ describe('useCacheToken', () => {
         cacheRef = useCacheToken(theme, ref([
           () => ({ colorPrimary: '#1677ff', borderRadius: 2 }),
         ]), ref({
+          cssVar: {
+            key: 'override-token',
+            prefix: 'override',
+          },
           override: {
             colorPrimary: '#000000',
           },
@@ -162,8 +178,8 @@ describe('useCacheToken', () => {
     mountWithStyleProvider(Demo)
     await nextTick()
 
-    const [token] = cacheRef!.value
-    expect(token.colorPrimary).toBe('#000000')
-    expect((token as any).customColor).toBe('#000000')
+    const [, , realToken] = cacheRef!.value
+    expect(realToken.colorPrimary).toBe('#000000')
+    expect((realToken as any).customColor).toBe('#000000')
   })
 })

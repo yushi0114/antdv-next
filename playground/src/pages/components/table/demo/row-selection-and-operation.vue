@@ -36,7 +36,7 @@ const columns: TableProps['columns'] = [
 const selectedRowKeys = ref<Key[]>([])
 const loading = ref(false)
 
-const start = () => {
+function start() {
   loading.value = true
   setTimeout(() => {
     selectedRowKeys.value = []
@@ -44,7 +44,7 @@ const start = () => {
   }, 1000)
 }
 
-const onSelectChange = (newSelectedRowKeys: Key[]) => {
+function onSelectChange(newSelectedRowKeys: Key[]) {
   console.log('selectedRowKeys changed: ', newSelectedRowKeys)
   selectedRowKeys.value = newSelectedRowKeys
 }

@@ -5,8 +5,8 @@ import hash from '@emotion/hash'
 import canUseDom from '@v-c/util/dist/Dom/canUseDom'
 import { updateCSS } from '@v-c/util/dist/Dom/dynamicCSS'
 import { computed } from 'vue'
-import { ATTR_MARK, ATTR_TOKEN, CSS_IN_JS_INSTANCE, useStyleContext } from '../StyleContext'
 import { collectStyleText } from '../ssr/styleCollector'
+import { ATTR_MARK, ATTR_TOKEN, CSS_IN_JS_INSTANCE, useStyleContext } from '../StyleContext'
 import { flattenToken, memoResult, token2key, toStyleStr } from '../util'
 import { transformToken } from '../util/css-variables'
 import { useGlobalCache } from './useGlobalCache'
@@ -160,7 +160,7 @@ export default function useCacheToken<
   const override = computed(() => option.value.override ? option.value.override : EMPTY_OVERRIDE)
   const formatToken = computed(() => option.value.formatToken)
   const compute = computed(() => option.value.getComputedToken)
-  const cssVar = computed(() => option.value.cssVar!)
+  const cssVar = computed(() => option.value.cssVar)
 
   const resolvedTokens = computed(() => tokens.value.map(token => (typeof token === 'function' ? token() : token)))
 
@@ -171,7 +171,7 @@ export default function useCacheToken<
 
   const tokenStr = computed(() => flattenToken(mergedToken.value))
   const overrideTokenStr = computed(() => flattenToken(override.value))
-  const cssVarStr = computed(() => (cssVar.value ? flattenToken(cssVar.value) : ''))
+  const cssVarStr = computed(() => flattenToken(cssVar.value))
 
   return useGlobalCache<TokenCacheValue<DerivativeToken>>(
     computed(() => TOKEN_PREFIX),
@@ -183,7 +183,7 @@ export default function useCacheToken<
 
       const actualToken = { ...mergedDerivativeToken }
       // Optimize for `useStyleRegister` performance
-      const mergedSalt = `${salt.value}_${cssVar.value?.prefix || ''}`
+      const mergedSalt = `${salt.value}_${cssVar.value.prefix || ''}`
       const hashId = hash(mergedSalt)
       const hashCls = `${hashPrefix}-${hash(mergedSalt)}`
       actualToken._tokenKey = token2key(actualToken, mergedSalt)
@@ -196,6 +196,8 @@ export default function useCacheToken<
           ignore: cssVar.value.ignore,
           unitless: cssVar.value.unitless,
           preserve: cssVar.value.preserve,
+          hashPriority: styleContext.value.hashPriority,
+          hashCls: cssVar.value.hashed ? hashCls : undefined,
         },
       ) as [any, string]
       tokenWithCssVar._hashId = hashId

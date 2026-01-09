@@ -3,7 +3,7 @@ import type { CSSVarRegisterProps } from '../src/cssinjs-utils'
 import { mount } from '@vue/test-utils'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { defineComponent, h, nextTick, ref } from 'vue'
+import { computed, defineComponent, h, nextTick, ref } from 'vue'
 import { genStyleUtils } from '../src/cssinjs-utils'
 import { mountWithStyleProvider } from './utils'
 
@@ -41,20 +41,21 @@ function createMockConfig() {
     },
   }
 
-  const usePrefix = vi.fn(() => ({
+  const usePrefix = vi.fn(() => ref({
     rootPrefixCls: 'ant',
     iconPrefixCls: 'anticon',
   }))
 
   const useToken = vi.fn(() => ({
-    theme: {},
-    token,
-    realToken,
-    hashId: 'hash',
-    cssVar: {
+    theme: ref({}),
+    token: ref(token),
+    realToken: ref(realToken),
+    hashId: ref('hash'),
+    cssVar: ref({
       key: 'css-var-key',
       prefix: 'css',
-    },
+    }),
+    zeroRuntime: ref(false),
   }))
 
   const getResetStyles = vi.fn(() => ({
@@ -67,7 +68,7 @@ function createMockConfig() {
     size: true,
   }))
 
-  const useCSP = vi.fn(() => ({ nonce: 'nonce' }))
+  const useCSP = vi.fn(() => ref({ nonce: 'nonce' }))
 
   const config = {
     usePrefix,
@@ -130,8 +131,9 @@ describe('genStyleUtils', () => {
     await nextTick()
 
     expect(resultRef.value).toBeTruthy()
-    expect(resultRef.value).toHaveLength(3)
-    expect(typeof resultRef.value?.[0]).toBe('function')
+    expect(resultRef.value).toHaveLength(2)
+    expect(resultRef.value?.[0].value).toBe('hash')
+    expect(resultRef.value?.[1].value).toBe('css-var-key')
 
     expect(styleFn).toHaveBeenCalledTimes(1)
 
@@ -192,11 +194,12 @@ describe('genStyleUtils', () => {
         },
       },
       setup(props) {
-        const [wrapSSR] = hook(props.prefixCls, props.rootCls ?? props.prefixCls)
+        const hashId = hook(
+          computed(() => props.prefixCls),
+          computed(() => props.rootCls ?? props.prefixCls),
+        )
         return () =>
-          wrapSSR(
-            h('div', { 'data-testid': 'test-component' }, 'Test'),
-          )
+          h('div', { 'data-testid': 'test-component', 'class': hashId.value }, 'Test')
       },
     })
 
@@ -239,8 +242,8 @@ describe('genStyleUtils', () => {
     const TestComponent = defineComponent({
       name: 'ComponentStyleHookNoReset',
       setup() {
-        const [wrapSSR] = hook('test-prefix', 'test-root')
-        return () => wrapSSR(h('span', 'content'))
+        const hashId = hook(ref('test-prefix'), ref('test-root'))
+        return () => h('span', { class: hashId.value }, 'content')
       },
     })
 

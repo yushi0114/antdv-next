@@ -1,3 +1,3 @@
-import skSK from '../../date-picker/locale/sk_SK';
+import skSK from '../../date-picker/locale/sk_SK'
 
-export default skSK;
+export default skSK

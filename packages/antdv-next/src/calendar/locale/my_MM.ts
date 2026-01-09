@@ -1,3 +1,3 @@
-import myMM from '../../date-picker/locale/my_MM';
+import myMM from '../../date-picker/locale/my_MM'
 
-export default myMM;
+export default myMM

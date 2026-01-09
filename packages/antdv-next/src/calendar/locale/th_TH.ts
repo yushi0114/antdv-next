@@ -1,3 +1,3 @@
-import thTH from '../../date-picker/locale/th_TH';
+import thTH from '../../date-picker/locale/th_TH'
 
-export default thTH;
+export default thTH

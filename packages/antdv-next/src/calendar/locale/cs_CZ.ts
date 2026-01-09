@@ -1,3 +1,3 @@
-import csCZ from '../../date-picker/locale/cs_CZ';
+import csCZ from '../../date-picker/locale/cs_CZ'
 
-export default csCZ;
+export default csCZ

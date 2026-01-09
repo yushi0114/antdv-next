@@ -1,3 +1,3 @@
-import zhTW from '../../date-picker/locale/zh_TW';
+import zhTW from '../../date-picker/locale/zh_TW'
 
-export default zhTW;
+export default zhTW
