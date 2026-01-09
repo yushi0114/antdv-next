@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { CSSProperties } from 'vue'
 import { EditOutlined, LinkOutlined } from '@antdv-next/icons'
 import { storeToRefs } from 'pinia'
 import demos from 'virtual:demos'
@@ -13,9 +14,11 @@ import { useAppStore } from '@/stores/app.ts'
 defineOptions({
   name: 'Demo',
 })
-const { src } = defineProps<{
+const { src, compact, background } = defineProps<{
   src: string
   iframe?: string
+  compact?: boolean
+  background?: string
 }>()
 const demo = computed(() => demos[src])
 const route = useRoute()
@@ -64,11 +67,25 @@ const locales = {
     },
   },
 }
+
+const demoStyle = computed(() => {
+  const styles: CSSProperties = {}
+  if (compact) {
+    styles.padding = '0px'
+    styles.overflow = 'hidden'
+  }
+  if (background) {
+    if (background === 'grey') {
+      styles.backgroundColor = 'var(--ant-color-bg-layout)'
+    }
+  }
+  return styles
+})
 </script>
 
 <template>
   <section :id="id" ref="domRef" class="ant-doc-demo-box border-1 border-solid border-color-split" :class="active ? 'border-primary' : ''">
-    <section v-if="!iframe" class="vp-raw ant-doc-demo-box-demo">
+    <section v-if="!iframe" class="vp-raw ant-doc-demo-box-demo" :style="demoStyle">
       <Suspense>
         <component :is="component" v-if="demo?.component" />
         <template #fallback>
