@@ -139,6 +139,37 @@ type TokenCacheValue<DerivativeToken> = [
   cssVarKey: string,
 ]
 
+export const extract: ExtractStyle<TokenCacheValue<any>> = (
+  cache,
+  _effectStyles,
+  options,
+) => {
+  const [, , realToken, styleStr, cssVarKey] = cache
+  const { plain } = options || {}
+
+  if (!styleStr) {
+    return null
+  }
+
+  const styleId = realToken._tokenKey
+  const order = -999
+
+  const sharedAttrs = {
+    'data-rc-order': 'prependQueue',
+    'data-rc-priority': `${order}`,
+  }
+
+  const styleText = toStyleStr(
+    styleStr,
+    cssVarKey,
+    styleId,
+    sharedAttrs,
+    plain,
+  )
+
+  return [order, styleId, styleText]
+}
+
 /**
  * Cache theme derivative token as global shared one
  * @param theme Theme entity
@@ -241,35 +272,4 @@ export default function useCacheToken<
       style.setAttribute(ATTR_TOKEN, themeKey)
     },
   )
-}
-
-export const extract: ExtractStyle<TokenCacheValue<any>> = (
-  cache,
-  _effectStyles,
-  options,
-) => {
-  const [, , realToken, styleStr, cssVarKey] = cache
-  const { plain } = options || {}
-
-  if (!styleStr) {
-    return null
-  }
-
-  const styleId = realToken._tokenKey
-  const order = -999
-
-  const sharedAttrs = {
-    'data-rc-order': 'prependQueue',
-    'data-rc-priority': `${order}`,
-  }
-
-  const styleText = toStyleStr(
-    styleStr,
-    cssVarKey,
-    styleId,
-    sharedAttrs,
-    plain,
-  )
-
-  return [order, styleId, styleText]
 }

@@ -31,6 +31,38 @@ export interface CSSVarRegisterConfig {
   hashId?: string
 }
 
+export const extract: ExtractStyle<CSSVarCacheValue<any>> = (
+  cache,
+  _effectStyles,
+  options,
+) => {
+  const [, styleStr, styleId, cssVarKey] = cache
+  const { plain } = options || {}
+
+  if (!styleStr) {
+    return null
+  }
+
+  const order = -999
+
+  // ====================== Style ======================
+  // Used for rc-util
+  const sharedAttrs = {
+    'data-rc-order': 'prependQueue',
+    'data-rc-priority': `${order}`,
+  }
+
+  const styleText = toStyleStr(
+    styleStr,
+    cssVarKey,
+    styleId,
+    sharedAttrs,
+    plain,
+  )
+
+  return [order, styleId, styleText]
+}
+
 export default function useCSSVarRegister<V, T extends Record<string, V>>(
   config: Ref<CSSVarRegisterConfig>,
   fn: () => T,
@@ -98,36 +130,4 @@ export default function useCSSVarRegister<V, T extends Record<string, V>>(
       style.setAttribute(ATTR_TOKEN, config.value.key)
     },
   )
-}
-
-export const extract: ExtractStyle<CSSVarCacheValue<any>> = (
-  cache,
-  _effectStyles,
-  options,
-) => {
-  const [, styleStr, styleId, cssVarKey] = cache
-  const { plain } = options || {}
-
-  if (!styleStr) {
-    return null
-  }
-
-  const order = -999
-
-  // ====================== Style ======================
-  // Used for rc-util
-  const sharedAttrs = {
-    'data-rc-order': 'prependQueue',
-    'data-rc-priority': `${order}`,
-  }
-
-  const styleText = toStyleStr(
-    styleStr,
-    cssVarKey,
-    styleId,
-    sharedAttrs,
-    plain,
-  )
-
-  return [order, styleId, styleText]
 }
