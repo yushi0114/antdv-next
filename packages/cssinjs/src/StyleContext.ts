@@ -1,4 +1,4 @@
-import type { InjectionKey, Ref } from 'vue'
+import type { App, InjectionKey, Ref } from 'vue'
 import type { Linter } from './linters'
 import defu from 'defu'
 import { computed, defineComponent, inject, markRaw, provide, ref } from 'vue'
@@ -60,13 +60,16 @@ const defaultStyleContext: StyleContextProps = {
   cache: createCache(),
   hashPriority: 'low',
   autoPrefix: false,
-
 }
 
 const StyleContextKey: InjectionKey<Ref<StyleContextProps>> = Symbol('StyleContext')
 
 export function useStyleContextProvide(props: Ref<StyleContextProps>) {
   provide(StyleContextKey, props)
+}
+
+export function provideStyleContext(app: App, props: Ref<StyleContextProps>) {
+  app.provide(StyleContextKey, props)
 }
 
 export function useStyleContext() {
