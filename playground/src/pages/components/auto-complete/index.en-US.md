@@ -50,8 +50,6 @@ Common props ref：[Common props](/docs/vue/common-props)
 | backfill | If backfill selected item the input when using keyboard | boolean | false | - |
 | classes | Customize class for each semantic structure inside the component. Supports object or function | Record&lt;[SemanticDOM](#semantic-dom), string&gt; \| (info: \{ props \}) =&gt; Record&lt;[SemanticDOM](#semantic-dom), string&gt; | - | - |
 | defaultActiveFirstOption | Whether active first option by default | boolean | true | - |
-| defaultOpen | Initial open state of dropdown | boolean | - | - |
-| defaultValue | Initial selected option | string | - | - |
 | disabled | Whether disabled select | boolean | false | - |
 | getPopupContainer | Parent node of the dropdown. Default to body, if you encountered positioning problems during scroll, try changing to the scrollable area and position relative to it | (triggerNode: HTMLElement) =&gt; HTMLElement | () =&gt; document.body | - |
 | notFoundContent | Specify content to show when no result matches | VueNode | - | - |
@@ -62,7 +60,7 @@ Common props ref：[Common props](/docs/vue/common-props)
 | popupRender | Customize dropdown content | (menu: VueNode) =&gt; VueNode | - | - |
 | showSearch | Search configuration | boolean \| [SearchConfig](#showsearch) | true | - |
 | size | The size of the input box | `large` \| `middle` \| `small` | - | - |
-| status | Set validation status | `error` \| `warning` | - | 4.19.0 |
+| status | Set validation status | `error` \| `warning` | - | - |
 | styles | Customize inline style for each semantic structure inside the component. Supports object or function | Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; \| (info: \{ props \}) =&gt; Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; | - | - |
 | value | Selected option | string | - | - |
 | variant | Variants of input | `outlined` \| `borderless` \| `filled` \| `underlined` | `outlined` | - |

@@ -51,8 +51,6 @@ demo:
 | backfill | 使用键盘选择选项的时候把选中项回填到输入框中 | boolean | false | - |
 | classes | 用于自定义组件内部各语义化结构的 class，支持对象或函数 | Record&lt;[SemanticDOM](#semantic-dom), string&gt; \| (info: \{ props \}) =&gt; Record&lt;[SemanticDOM](#semantic-dom), string&gt; | - | - |
 | defaultActiveFirstOption | 是否默认高亮第一个选项 | boolean | true | - |
-| defaultOpen | 是否默认展开下拉菜单 | boolean | - | - |
-| defaultValue | 指定默认选中的条目 | string | - | - |
 | disabled | 是否禁用 | boolean | false | - |
 | getPopupContainer | 菜单渲染父节点。默认渲染到 body 上，如果你遇到菜单滚动定位问题，试试修改为滚动的区域，并相对其定位 | (triggerNode: HTMLElement) =&gt; HTMLElement | () =&gt; document.body | - |
 | notFoundContent | 当下拉列表为空时显示的内容 | VueNode | - | - |
@@ -63,7 +61,7 @@ demo:
 | popupRender | 自定义下拉框内容 | (menu: VueNode) =&gt; VueNode | - | - |
 | showSearch | 搜索配置 | boolean \| [SearchConfig](#showsearch) | true | - |
 | size | 控件大小 | `large` \| `middle` \| `small` | - | - |
-| status | 设置校验状态 | `error` \| `warning` | - | 4.19.0 |
+| status | 设置校验状态 | `error` \| `warning` | - | - |
 | styles | 用于自定义组件内部各语义化结构的行内 style，支持对象或函数 | Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; \| (info: \{ props \}) =&gt; Record&lt;[SemanticDOM](#semantic-dom), CSSProperties&gt; | - | - |
 | value | 指定当前选中的条目 | string | - | - |
 | variant | 形态变体 | `outlined` \| `borderless` \| `filled` \| `underlined` | `outlined` | - |
