@@ -18,6 +18,10 @@ demo:
 ## Examples {#examples}
 
 <demo-group>
+  <demo src="./demo/basic.vue">Basic</demo>
+  <demo src="./demo/custom-input.vue">Custom input</demo>
+  <demo src="./demo/option.vue">Option children</demo>
+  <demo src="./demo/style-class.vue">Custom semantic dom styling</demo>
 </demo-group>
 
 ## API

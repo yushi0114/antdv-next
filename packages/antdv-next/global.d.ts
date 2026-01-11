@@ -113,5 +113,7 @@ declare module 'vue' {
     ARangePicker: typeof import('antdv-next')['DateRangePicker']
     ATimePicker: typeof import('antdv-next')['TimePicker']
     ATimeRangePicker: typeof import('antdv-next')['TimeRangePicker']
+    AAutoComplete: typeof import('antdv-next')['AutoComplete']
+    AAutoCompleteOption: typeof import('antdv-next')['AutoCompleteOption']
   }
 }

@@ -6,6 +6,16 @@ export { default as Anchor } from './anchor'
 export type { AnchorLinkProps, AnchorProps } from './anchor'
 export { default as App } from './app'
 export type { AppProps } from './app'
+export { default as AutoComplete, Option as AutoCompleteOption } from './auto-complete'
+export type {
+  AutoCompleteClassNamesType,
+  AutoCompleteEmits,
+  AutoCompleteProps,
+  AutoCompleteSlots,
+  AutoCompleteStylesType,
+  DataSourceItemObject,
+  DataSourceItemType,
+} from './auto-complete'
 export { default as Avatar, AvatarGroup } from './avatar'
 export type { AvatarEmits, AvatarGroupProps, AvatarProps, AvatarSlots } from './avatar'
 export { default as Badge } from './badge'

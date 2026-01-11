@@ -19,6 +19,10 @@ demo:
 ## 代码演示 {#examples}
 
 <demo-group>
+  <demo src="./demo/basic.vue">基础用法</demo>
+  <demo src="./demo/custom-input.vue">自定义输入框</demo>
+  <demo src="./demo/option.vue">Option 子项</demo>
+  <demo src="./demo/style-class.vue">语义化样式</demo>
 </demo-group>
 
 ## API
