@@ -287,10 +287,10 @@ const InternalAutoComplete = defineComponent<
         onClear: (...args: any[]) => {
           emit('clear', ...args)
         },
-        onKeyDown: (...args: any[]) => {
+        onKeydown: (...args: any[]) => {
           emit('keydown', ...args)
         },
-        onKeyUp: (...args: any[]) => {
+        onKeyup: (...args: any[]) => {
           emit('keyup', ...args)
         },
         onBlur: (...args: any[]) => {
@@ -311,16 +311,16 @@ const InternalAutoComplete = defineComponent<
         onDeselect: (...args: any[]) => {
           emit('deselect', ...args)
         },
-        onInputKeyDown: (...args: any[]) => {
+        onInputKeydown: (...args: any[]) => {
           emit('inputKeydown', ...args)
         },
-        onMouseDown: (...args: any[]) => {
+        onMousedown: (...args: any[]) => {
           emit('mousedown', ...args)
         },
-        onMouseLeave: (...args: any[]) => {
+        onMouseleave: (...args: any[]) => {
           emit('mouseleave', ...args)
         },
-        onMouseEnter: (...args: any[]) => {
+        onMouseenter: (...args: any[]) => {
           emit('mouseenter', ...args)
         },
         onPopupScroll: (...args: any[]) => {

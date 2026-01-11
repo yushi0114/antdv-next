@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { CloseSquareFilled } from '@antdv-next/icons'
+import { h, ref } from 'vue'
 
-const value = ref('')
 const options = ref<{ value: string }[]>([])
-const anotherOptions = ref<{ value: string }[]>([])
 
 const mockVal = (str: string, repeat = 1) => ({ value: str.repeat(repeat) })
 
@@ -17,13 +16,7 @@ const handleSearch = (text: string) => {
   options.value = getPanelValue(text)
 }
 
-const handleAnotherSearch = (text: string) => {
-  anotherOptions.value = getPanelValue(text)
-}
-
-const handleSelect = (data: string) => {
-  console.log('onSelect', data)
-}
+const clearIcon = h(CloseSquareFilled)
 </script>
 
 <template>
@@ -31,17 +24,16 @@ const handleSelect = (data: string) => {
     <a-auto-complete
       :options="options"
       style="width: 200px"
-      placeholder="input here"
       :showSearch="{ onSearch: handleSearch }"
-      @select="handleSelect"
+      placeholder="UnClearable"
+      :allowClear="false"
     />
     <a-auto-complete
-      v-model:value="value"
-      :options="anotherOptions"
+      :options="options"
       style="width: 200px"
-      placeholder="control mode"
-      :showSearch="{ onSearch: handleAnotherSearch }"
-      @select="handleSelect"
+      :showSearch="{ onSearch: handleSearch }"
+      placeholder="Customized clear icon"
+      :allowClear="{ clearIcon }"
     />
   </a-flex>
 </template>

@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const value = ref('')
 const options = ref<{ value: string }[]>([])
-const anotherOptions = ref<{ value: string }[]>([])
 
 const mockVal = (str: string, repeat = 1) => ({ value: str.repeat(repeat) })
 
@@ -17,12 +15,8 @@ const handleSearch = (text: string) => {
   options.value = getPanelValue(text)
 }
 
-const handleAnotherSearch = (text: string) => {
-  anotherOptions.value = getPanelValue(text)
-}
-
-const handleSelect = (data: string) => {
-  console.log('onSelect', data)
+const handleSelect = (value: string) => {
+  console.log('onSelect', value)
 }
 </script>
 
@@ -31,17 +25,33 @@ const handleSelect = (data: string) => {
     <a-auto-complete
       :options="options"
       style="width: 200px"
-      placeholder="input here"
+      placeholder="Outlined"
       :showSearch="{ onSearch: handleSearch }"
       @select="handleSelect"
     />
     <a-auto-complete
-      v-model:value="value"
-      :options="anotherOptions"
+      :options="options"
       style="width: 200px"
-      placeholder="control mode"
-      :showSearch="{ onSearch: handleAnotherSearch }"
+      placeholder="Filled"
+      :showSearch="{ onSearch: handleSearch }"
       @select="handleSelect"
+      variant="filled"
+    />
+    <a-auto-complete
+      :options="options"
+      style="width: 200px"
+      placeholder="Borderless"
+      :showSearch="{ onSearch: handleSearch }"
+      @select="handleSelect"
+      variant="borderless"
+    />
+    <a-auto-complete
+      :options="options"
+      style="width: 200px"
+      placeholder="Underlined"
+      :showSearch="{ onSearch: handleSearch }"
+      @select="handleSelect"
+      variant="underlined"
     />
   </a-flex>
 </template>

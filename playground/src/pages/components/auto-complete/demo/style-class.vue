@@ -1,52 +1,77 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+
+const stylesObject = {
+  popup: {
+    root: {
+      borderWidth: '1px',
+      borderStyle: 'solid',
+      borderColor: '#1890ff',
+    },
+    list: {
+      backgroundColor: 'rgba(240, 240, 240, 0.85)',
+    },
+    listItem: {
+      color: '#272727',
+    },
+  },
+}
+
+const stylesFn = ({ props }: { props: { variant?: string } }) => {
+  if (props.variant === 'filled') {
+    return {
+      popup: {
+        root: {
+          borderWidth: '1px',
+          borderStyle: 'solid',
+          borderColor: '#ccc',
+        },
+        list: {
+          backgroundColor: 'rgba(240, 240, 240, 0.85)',
+        },
+        listItem: {
+          color: '#272727',
+        },
+      },
+    }
+  }
+  return {}
+}
+
 const options = [
-  { value: 'Oak Street' },
-  { value: 'Pine Avenue' },
-  { value: 'Cedar Lane' },
+  { value: 'Burnaby' },
+  { value: 'Seattle' },
+  { value: 'Los Angeles' },
+  { value: 'San Francisco' },
+  { value: 'Meet student' },
 ]
 
-const classes = {
-  root: 'auto-complete-demo',
-  input: 'auto-complete-demo-input',
-  popup: {
-    root: 'auto-complete-demo-popup',
+const sharedProps = {
+  options,
+  classes: {
+    root: 'auto-complete-style-root',
   },
+  style: { width: '200px' },
 }
 
-const styles = {
-  placeholder: {
-    color: '#fa8c16',
-  },
-  content: {
-    fontWeight: 600,
-  },
-}
+const value = ref('')
 </script>
 
 <template>
-  <a-auto-complete
-    :options="options"
-    :classes="classes"
-    :styles="styles"
-    rootClass="auto-complete-demo-root"
-    placeholder="Custom classes"
-  />
+  <a-flex vertical gap="middle">
+    <a-auto-complete v-model:value="value" v-bind="sharedProps" placeholder="object styles" :styles="stylesObject" />
+    <a-auto-complete
+      v-model:value="value"
+      v-bind="sharedProps"
+      placeholder="function styles"
+      :styles="stylesFn"
+      variant="filled"
+    />
+  </a-flex>
 </template>
 
 <style>
-.auto-complete-demo-root {
-  width: 280px;
-}
-
-.auto-complete-demo {
-  border-radius: 10px;
-}
-
-.auto-complete-demo-input {
-  color: #722ed1;
-}
-
-.auto-complete-demo-popup {
-  border: 1px solid #fa8c16;
+.auto-complete-style-root {
+  border-radius: 4px;
 }
 </style>

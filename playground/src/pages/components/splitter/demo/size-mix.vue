@@ -63,7 +63,7 @@ const SIZE_BUCKETS = computed(() => sizeBucket.value === 1 ? SIZE_BUCKETS_1 : SI
     </a-radio-group>
     <a-splitter
       :key="sizeBucket"
-      style="height: 300px; width: 1000px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1)"
+      style="height: 300px;  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1)"
     >
       <a-splitter-panel
         :default-size="SIZE_BUCKETS?.[0]?.defaultSize"

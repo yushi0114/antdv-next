@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const value = ref('')
 const options = ref<{ value: string }[]>([])
 const anotherOptions = ref<{ value: string }[]>([])
 
@@ -20,28 +19,21 @@ const handleSearch = (text: string) => {
 const handleAnotherSearch = (text: string) => {
   anotherOptions.value = getPanelValue(text)
 }
-
-const handleSelect = (data: string) => {
-  console.log('onSelect', data)
-}
 </script>
 
 <template>
-  <a-flex vertical gap="middle">
+  <a-space direction="vertical" style="width: 100%">
     <a-auto-complete
       :options="options"
-      style="width: 200px"
-      placeholder="input here"
       :showSearch="{ onSearch: handleSearch }"
-      @select="handleSelect"
+      status="error"
+      style="width: 200px"
     />
     <a-auto-complete
-      v-model:value="value"
       :options="anotherOptions"
-      style="width: 200px"
-      placeholder="control mode"
       :showSearch="{ onSearch: handleAnotherSearch }"
-      @select="handleSelect"
+      status="warning"
+      style="width: 200px"
     />
-  </a-flex>
+  </a-space>
 </template>
