@@ -1,15 +1,25 @@
 <script setup lang="ts">
 const items = [
   {
-    title: 'Home',
+    title: 'Location',
   },
   {
+    type: 'separator',
+    separator: ':',
+  },
+  {
+    href: '',
     title: 'Application Center',
-    href: '',
   },
   {
-    title: 'Application List',
+    type: 'separator',
+  },
+  {
     href: '',
+    title: 'Application List',
+  },
+  {
+    type: 'separator',
   },
   {
     title: 'An Application',

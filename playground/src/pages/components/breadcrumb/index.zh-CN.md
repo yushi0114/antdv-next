@@ -17,6 +17,14 @@ demo:
 ## 示例 {#examples}
 
 <demo-group>
+  <demo src="./demo/basic.vue">基础用法</demo>
+  <demo src="./demo/with-icon.vue">带有图标的</demo>
+  <demo src="./demo/with-params.vue">带有参数的</demo>
+  <demo src="./demo/separator.vue">分隔符</demo>
+  <demo src="./demo/overlay.vue">带下拉菜单的的面包屑</demo>
+  <demo src="./demo/separator-component.vue">独立的分隔符</demo>
+  <demo src="./demo/debug-routes.vue">Debug Routes</demo>
+  <demo src="./demo/style-class.vue">自定义语义结构的样式和类</demo>
 </demo-group>
 
 ## API
