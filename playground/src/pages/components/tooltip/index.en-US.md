@@ -32,7 +32,7 @@ demo:
   <demo src="./demo/disabled.vue">Disabled</demo>
   <demo src="./demo/disabled-children.vue" debug>Disabled children</demo>
   <demo src="./demo/wrap-custom-component.vue">Wrap custom component</demo>
-  <demo src="./demo/style-class.vue" version="6.0.0">Custom semantic dom styling</demo>
+  <demo src="./demo/style-class.vue">Custom semantic dom styling</demo>
 </demo-group>
 
 ## API
@@ -43,37 +43,37 @@ Common props ref：[Common props](/docs/vue/common-props)
 
 | Property | Description | Type | Default | Version |
 | --- | --- | --- | --- | --- |
-| align | - | AlignType | - | - |
+| align | Popup alignment config | AlignType | - | - |
 | arrow | Show, hide or keep arrow in the center | boolean \| &#123; pointAtCenter?: boolean &#125; | - | - |
-| autoAdjustOverflow | Adjust placement automatically when tooltip is invisible | boolean \| AdjustOverflow | - | - |
-| color | The background color. After using this attribute, the internal text color will adapt automatically | LiteralUnion&lt;PresetColorType&gt; | - | 5.27.0 |
+| autoAdjustOverflow | Auto adjust placement when tooltip is invisible | boolean \| AdjustOverflow | - | - |
+| color | The background color. After using this attribute, the internal text color will adapt automatically | LiteralUnion&lt;PresetColorType&gt; | - | - |
 | open | Whether tooltip is visible | boolean | - | - |
-| defaultOpen | Initial open state | boolean | - | - |
-| getPopupContainer | The container of the popup | (triggerNode: HTMLElement) =&gt; HTMLElement | - | - |
-| destroyOnHidden | Whether destroy tooltip when hidden | boolean | - | - |
-| zIndex | - | number | - | - |
-| placement | Tooltip placement | TooltipPlacement | - | - |
-| trigger | Tooltip trigger action | ActionType \| ActionType[] | - | - |
-| fresh | - | boolean | - | - |
-| mouseEnterDelay | - | number | - | - |
-| mouseLeaveDelay | - | number | - | - |
+| defaultOpen | Initial open state | boolean | false | - |
+| getPopupContainer | Specify container for tooltip | (triggerNode: HTMLElement) =&gt; HTMLElement | - | - |
+| destroyOnHidden | Destroy tooltip when hidden | boolean | - | - |
+| zIndex | Set z-index of tooltip | number | - | - |
+| placement | Tooltip placement | TooltipPlacement | top | - |
+| trigger | Trigger action | ActionType \| ActionType[] | - | - |
+| fresh | Update content even when tooltip is hidden | boolean | - | - |
+| mouseEnterDelay | Delay in seconds before showing tooltip | number | 0.1 | - |
+| mouseLeaveDelay | Delay in seconds before hiding tooltip | number | 0.1 | - |
 | classes | Semantic DOM class. Supports object or function | TooltipClassNamesType | - | - |
 | styles | Semantic DOM style. Supports object or function | TooltipStylesType | - | - |
-| getTooltipContainer | - | (node: HTMLElement) =&gt; HTMLElement | - | - |
-| motion | - | VcTooltipProps['motion'] | - | - |
-| afterOpenChange | - | (open: boolean) =&gt; void | - | - |
-| builtinPlacements | - | typeof Placements | - | - |
+| getTooltipContainer | Legacy alias of `getPopupContainer` | (node: HTMLElement) =&gt; HTMLElement | - | - |
+| motion | Popup motion config | VcTooltipProps['motion'] | - | - |
+| afterOpenChange | Callback after visibility change | (open: boolean) =&gt; void | - | - |
+| builtinPlacements | Built-in placement config | typeof Placements | - | - |
 | title | The text shown in the tooltip | VueNode | - | - |
-| overlay | - | VueNode | - | - |
-| openClass | - | string | - | - |
-| unique | - | boolean | - | - |
+| overlay | Legacy alias of `title` | VueNode | - | - |
+| openClass | Class added to child when tooltip is open | string | - | - |
+| unique | Enable unique display inside `AUniqueProvider`/ConfigProvider | boolean | - | - |
 
 ### Events {#events}
 
 | Event | Description | Type | Version |
 | --- | --- | --- | --- |
-| openChange | - | (open: boolean) =&gt; void | - |
-| update:open | - | (open: boolean) =&gt; void | - |
+| openChange | Callback when tooltip visibility changes | (open: boolean) =&gt; void | - |
+| update:open | Emit when tooltip visibility changes | (open: boolean) =&gt; void | - |
 
 ### Slots {#slots}
 
@@ -85,8 +85,8 @@ Common props ref：[Common props](/docs/vue/common-props)
 
 | Method | Description | Type | Version |
 | --- | --- | --- | --- |
-| forcePopupAlign | Deprecated. | VoidFunction | - |
-| forceAlign | - | VoidFunction | - |
+| forcePopupAlign | Deprecated | VoidFunction | - |
+| forceAlign | Force popup realign | VoidFunction | - |
 | nativeElement | Wrapped dom element. Not promise valid if child not support ref | HTMLElement | - |
 | popupElement | Popup dom element | HTMLDivElement | - |
 

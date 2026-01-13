@@ -28,10 +28,12 @@ demo:
   <demo src="./demo/auto-adjust-overflow.vue" debug>自动调整位置</demo>
   <demo src="./demo/destroy-on-close.vue" debug>隐藏后销毁</demo>
   <demo src="./demo/colorful.vue">多彩文字提示</demo>
+  <demo src="./demo/render-panel.vue" debug>_InternalPanelDoNotUseOrYouWillBeFired</demo>
+  <demo src="./demo/debug.vue" debug>Debug</demo>
   <demo src="./demo/disabled.vue">禁用</demo>
   <demo src="./demo/disabled-children.vue" debug>禁用子元素</demo>
   <demo src="./demo/wrap-custom-component.vue">自定义子组件</demo>
-  <demo src="./demo/style-class.vue" version="6.0.0">自定义语义结构的样式和类</demo>
+  <demo src="./demo/style-class.vue">自定义语义结构的样式和类</demo>
 </demo-group>
 
 ## API
@@ -42,37 +44,37 @@ demo:
 
 | 属性 | 说明 | 类型 | 默认值 | 版本 |
 | --- | --- | --- | --- | --- |
-| align | - | AlignType | - | - |
+| align | 浮层对齐方式配置 | AlignType | - | - |
 | arrow | 支持显示、隐藏以及将箭头保持居中定位 | boolean \| &#123; pointAtCenter?: boolean &#125; | - | - |
 | autoAdjustOverflow | 气泡框不可见时自动调整位置 | boolean \| AdjustOverflow | - | - |
-| color | 设置背景颜色，使用该属性后内部文字颜色将自适应 | LiteralUnion&lt;PresetColorType&gt; | - | 5.27.0 |
+| color | 设置背景颜色，使用该属性后内部文字颜色将自适应 | LiteralUnion&lt;PresetColorType&gt; | - | - |
 | open | 是否显示 | boolean | - | - |
-| defaultOpen | 默认是否显示 | boolean | - | - |
+| defaultOpen | 默认是否显示 | boolean | false | - |
 | getPopupContainer | 浮层渲染父节点 | (triggerNode: HTMLElement) =&gt; HTMLElement | - | - |
 | destroyOnHidden | 隐藏后是否销毁 | boolean | - | - |
-| zIndex | - | number | - | - |
-| placement | 气泡框位置 | TooltipPlacement | - | - |
+| zIndex | 设置浮层 z-index | number | - | - |
+| placement | 气泡框位置 | TooltipPlacement | top | - |
 | trigger | 触发行为 | ActionType \| ActionType[] | - | - |
-| fresh | - | boolean | - | - |
-| mouseEnterDelay | - | number | - | - |
-| mouseLeaveDelay | - | number | - | - |
+| fresh | 在隐藏状态也更新内容 | boolean | - | - |
+| mouseEnterDelay | 鼠标移入后显示延时，单位秒 | number | 0.1 | - |
+| mouseLeaveDelay | 鼠标移出后隐藏延时，单位秒 | number | 0.1 | - |
 | classes | 语义化结构 class，支持对象或函数 | TooltipClassNamesType | - | - |
 | styles | 语义化结构 style，支持对象或函数 | TooltipStylesType | - | - |
-| getTooltipContainer | - | (node: HTMLElement) =&gt; HTMLElement | - | - |
-| motion | - | VcTooltipProps['motion'] | - | - |
-| afterOpenChange | - | (open: boolean) =&gt; void | - | - |
-| builtinPlacements | - | typeof Placements | - | - |
+| getTooltipContainer | `getPopupContainer` 的兼容别名 | (node: HTMLElement) =&gt; HTMLElement | - | - |
+| motion | 浮层动画配置 | VcTooltipProps['motion'] | - | - |
+| afterOpenChange | 显隐变化后的回调 | (open: boolean) =&gt; void | - | - |
+| builtinPlacements | 内置位置配置 | typeof Placements | - | - |
 | title | 提示文字 | VueNode | - | - |
-| overlay | - | VueNode | - | - |
-| openClass | - | string | - | - |
-| unique | - | boolean | - | - |
+| overlay | `title` 的兼容别名 | VueNode | - | - |
+| openClass | 气泡显示时附加在子元素上的 class | string | - | - |
+| unique | 在 `AUniqueProvider`/ConfigProvider 中启用唯一显示 | boolean | - | - |
 
 ### 事件 {#events}
 
 | 事件 | 说明 | 类型 | 版本 |
 | --- | --- | --- | --- |
-| openChange | - | (open: boolean) =&gt; void | - |
-| update:open | - | (open: boolean) =&gt; void | - |
+| openChange | 显隐变化时回调 | (open: boolean) =&gt; void | - |
+| update:open | 显隐变化时触发 | (open: boolean) =&gt; void | - |
 
 ### 插槽 {#slots}
 
@@ -84,10 +86,10 @@ demo:
 
 | 方法 | 说明 | 类型 | 版本 |
 | --- | --- | --- | --- |
-| forcePopupAlign | Deprecated. | VoidFunction | - |
-| forceAlign | - | VoidFunction | - |
-| nativeElement | Wrapped dom element. Not promise valid if child not support ref | HTMLElement | - |
-| popupElement | Popup dom element | HTMLDivElement | - |
+| forcePopupAlign | 已废弃 | VoidFunction | - |
+| forceAlign | 强制重新对齐 | VoidFunction | - |
+| nativeElement | 包裹的 DOM 元素，子元素不支持 ref 时可能不可用 | HTMLElement | - |
+| popupElement | 浮层 DOM 元素 | HTMLDivElement | - |
 
 ### ConfigProvider - tooltip.unique {#config-provider-tooltip-unique}
 
