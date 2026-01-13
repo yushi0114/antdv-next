@@ -13,9 +13,21 @@ demo:
 
 ## When To Use {#when-to-use}
 
+A simple popup card to provide extra information or operations.
+
+Comparing with `Tooltip`, besides information `Popover` card can also provide action elements like links and buttons.
+
 ## Examples {#examples}
 
 <demo-group>
+  <demo src="./demo/basic.vue">Basic</demo>
+  <demo src="./demo/trigger-type.vue">Three ways to trigger</demo>
+  <demo src="./demo/placement.vue">Placement</demo>
+  <demo src="./demo/arrow.vue">Arrow</demo>
+  <demo src="./demo/shift.vue" iframe="300">Auto Shift</demo>
+  <demo src="./demo/control.vue">Controlling the close of the dialog</demo>
+  <demo src="./demo/hover-with-click.vue">Hover with click popover</demo>
+  <demo src="./demo/style-class.vue">Custom semantic dom styling</demo>
 </demo-group>
 
 ## API
@@ -26,20 +38,45 @@ Common props ref：[Common props](/docs/vue/common-props)
 
 | Property | Description | Type | Default | Version |
 | --- | --- | --- | --- | --- |
-| title | - | VueNode | - | - |
-| content | - | VueNode | - | - |
-| classes | - | PopoverClassNamesType | - | - |
-| styles | - | PopoverStylesType | - | - |
+| title | Title of the card | VueNode | - | - |
+| content | Content of the card | VueNode | - | - |
+| classes | Customize class for each semantic structure inside the component. Supports object or function | PopoverClassNamesType | - | - |
+| styles | Customize inline style for each semantic structure inside the component. Supports object or function | PopoverStylesType | - | - |
+
+Popover also supports all Tooltip props. See [Tooltip](/components/tooltip#api).
 
 ### Events {#events}
 
 | Event | Description | Type | Version |
 | --- | --- | --- | --- |
-| openChange | - | (open: boolean, e?: MouseEvent \| KeyboardEvent) =&gt; void | - |
+| openChange | Callback when popover visibility changes | (open: boolean, e?: MouseEvent \| KeyboardEvent) =&gt; void | - |
 
 ### Slots {#slots}
 
 | Slot | Description | Type | Version |
 | --- | --- | --- | --- |
-| title | - | () =&gt; any | - |
-| content | - | () =&gt; any | - |
+| title | Title of the card | () =&gt; any | - |
+| content | Content of the card | () =&gt; any | - |
+
+## Note {#note}
+
+Please ensure that the child node of `Popover` can accept `mouseenter`, `mouseleave`, `focus`, `click` events.
+
+## Semantic DOM {#semantic-dom}
+
+| Name | Description |
+| --- | --- |
+| root | Root element |
+| container | Popover content wrapper |
+| arrow | Arrow element |
+| title | Title element |
+| content | Content element |
+
+## Design Token {#design-token}
+
+
+See [Customize Theme](/docs/vue/customize-theme) to learn how to use Design Token.
+
+## FAQ
+
+For more questions, please refer to [Tooltip FAQ](/components/tooltip#faq).

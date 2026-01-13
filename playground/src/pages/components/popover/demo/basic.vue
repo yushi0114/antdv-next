@@ -1,3 +1,11 @@
+<docs lang="zh-CN">
+最简单的用法，浮层的大小由内容区域决定。
+</docs>
+
+<docs lang="en-US">
+The most basic example. The size of the floating layer depends on the contents region.
+</docs>
+
 <template>
   <a-popover title="Title">
     <template #content>
@@ -11,3 +19,9 @@
     </a-button>
   </a-popover>
 </template>
+
+<style scoped>
+:global(.ant-popover-content p) {
+  margin: 0;
+}
+</style>

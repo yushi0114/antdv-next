@@ -1,24 +1,36 @@
-<script lang="ts" setup>
-import { shallowRef } from 'vue'
+<docs lang="zh-CN">
+最简单的用法，支持确认标题和描述。
+</docs>
 
-function handleConfirm() {
-  console.log('Confirmed')
+<docs lang="en-US">
+The basic example supports the title and description props of confirmation.
+</docs>
+
+<script setup lang="ts">
+import { message } from 'antdv-next'
+
+const [messageApi, ContextHolder] = message.useMessage()
+
+const confirm = (e?: MouseEvent) => {
+  console.log(e)
+  messageApi.success('Click on Yes')
 }
-function handleCancel() {
-  console.log('Cancelled')
+
+const cancel = (e?: MouseEvent) => {
+  console.log(e)
+  messageApi.error('Click on No')
 }
-const open = shallowRef(false)
 </script>
 
 <template>
+  <ContextHolder />
   <a-popconfirm
-    v-model:open="open"
     title="Delete the task"
     description="Are you sure to delete this task?"
     ok-text="Yes"
     cancel-text="No"
-    @confirm="handleConfirm"
-    @cancel="handleCancel"
+    @confirm="confirm"
+    @cancel="cancel"
   >
     <a-button danger>
       Delete
