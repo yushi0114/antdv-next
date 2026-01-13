@@ -145,7 +145,6 @@ const Dropdown = defineComponent<
 
     // =========================== Open ============================
     const mergedOpen = shallowRef(props.open ?? false)
-    const popupClickRef = shallowRef(false)
     watch(
       () => props.open,
       (value) => {
@@ -155,10 +154,6 @@ const Dropdown = defineComponent<
       },
     )
     const onInnerOpenChange = (nextOpen: boolean) => {
-      if (popupClickRef.value) {
-        popupClickRef.value = false
-        return
-      }
       if (props.open === undefined) {
         mergedOpen.value = nextOpen
       }
@@ -326,9 +321,6 @@ const Dropdown = defineComponent<
           overlay={renderOverlay}
           placement={memoPlacement.value}
           onVisibleChange={onInnerOpenChange}
-          onOverlayClick={() => {
-            popupClickRef.value = true
-          }}
           overlayStyle={{ ...mergedStyles.value, zIndex: zIndex.value }}
           overlayClassName={overlayClassNameCustomized}
           autoDestroy={destroyOnHidden}
