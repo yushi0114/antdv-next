@@ -675,6 +675,9 @@ importers:
       '@ant-design/colors':
         specifier: 'catalog:'
         version: 7.2.1
+      '@ant-design/fast-color':
+        specifier: 'catalog:'
+        version: 3.0.0
       '@antdv-next/cssinjs':
         specifier: workspace:^
         version: link:../packages/cssinjs
