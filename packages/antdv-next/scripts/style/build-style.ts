@@ -2,15 +2,15 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { createCache, extractStyle, StyleProvider } from '@antdv-next/cssinjs'
-import { renderToString } from '@vue/server-renderer'
 import { createSSRApp, Fragment, h } from 'vue'
+import { renderToString } from 'vue/server-renderer'
 // eslint-disable-next-line antfu/no-import-dist
-import * as _antd from '../../dist/components'
+import * as _antd from '../../dist/components.mjs'
 
-const antd = _antd as any
+const antd = (_antd as any).components_exports ?? _antd
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const output = path.resolve(__dirname, '../../src/style/antd.css')
+const output = path.resolve(__dirname, '../../dist/antd.css')
 
 const blackList = ['ConfigProvider', 'Grid']
 
@@ -101,6 +101,19 @@ function shouldRenderComponent(name: string) {
   return name[0] === name![0]!.toUpperCase() || name === 'message' || name === 'notification'
 }
 
+function isRenderableComponent(name: string, component: any) {
+  if (!shouldRenderComponent(name))
+    return false
+  if (!component)
+    return false
+  if (typeof component === 'function')
+    return true
+  if (typeof component === 'object') {
+    return Boolean((component as any).render || (component as any).setup || (component as any).__asyncLoader)
+  }
+  return false
+}
+
 function normalizeRender(node: RenderNode): ReturnType<typeof h>[] {
   if (!node)
     return []
@@ -111,7 +124,7 @@ function normalizeRender(node: RenderNode): ReturnType<typeof h>[] {
 
 function defaultNode() {
   const nodes = Object.keys(antd)
-    .filter(shouldRenderComponent)
+    .filter(name => isRenderableComponent(name, (antd as any)[name]) || ComponentCustomizeRender[name])
     .map((compName) => {
       const Comp = (antd as any)[compName]
       const renderFunc = ComponentCustomizeRender[compName]
@@ -122,17 +135,19 @@ function defaultNode() {
   return h(Fragment, null, nodes)
 }
 
-function extractStyleText(customTheme?: (node: ReturnType<typeof h>) => ReturnType<typeof h>) {
+async function extractStyleText(customTheme?: (node: ReturnType<typeof h>) => ReturnType<typeof h>) {
   const cache = createCache()
+  const ConfigProvider = (antd as any).ConfigProvider || Fragment
   const app = createSSRApp({
-    render: () => h(antd.ConfigProvider, { theme: { hashed: false } }, {
-      default: () => h(StyleProvider, { cache }, {
+    render: () => h(ConfigProvider, { theme: { hashed: false } }, {
+      default: () => h(StyleProvider, { cache, mock: 'server' }, {
         default: () => customTheme ? customTheme(defaultNode()) : defaultNode(),
       }),
     }),
   })
 
-  return renderToString(app).then(() => extractStyle(cache, { plain: true, types: 'style' }))
+  await renderToString(app)
+  return extractStyle(cache, { plain: true, types: 'style' })
 }
 
 async function buildStyle() {
@@ -140,7 +155,7 @@ async function buildStyle() {
   await fs.rm(output, { force: true })
   const styleText = await extractStyleText()
   await fs.writeFile(output, styleText)
-  console.log(`Style output saved to: ${output}`)
+  console.log(`Style output saved to dist/antd.css`)
 }
 
 async function main() {
