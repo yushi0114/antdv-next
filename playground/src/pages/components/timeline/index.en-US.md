@@ -27,6 +27,10 @@ demo:
 <demo src="./demo/variant.vue">Variant</demo>
 <demo src="./demo/end.vue">Right Alternate</demo>
 <demo src="./demo/horizontal.vue">Horizontal</demo>
+<demo src="./demo/title-span.vue">Title Offset</demo>
+<demo src="./demo/semantic.vue">Semantic Sample</demo>
+<demo src="./demo/style-class.vue">Custom semantic dom styling</demo>
+<demo src="./demo/component-token.vue" debug>Component Token</demo>
 </demo-group>
 
 ## API

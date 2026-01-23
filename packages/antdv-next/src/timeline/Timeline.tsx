@@ -1,12 +1,13 @@
 import type { LiteralUnion } from '@v-c/util/dist/type'
-import type { App, CSSProperties, SlotsType } from 'vue'
+import type { App, CSSProperties, Ref, SlotsType } from 'vue'
 import type { EmptyEmit, VueNode } from '../_util/type.ts'
 import type { ComponentBaseProps } from '../config-provider/context.ts'
 import type { StepItem, StepsProps } from '../steps'
 import type { TimelineItemProps } from './TimelineItem.tsx'
+import { useUnstableProvider } from '@v-c/steps/dist/UnstableContext.js'
 import { classNames as clsx } from '@v-c/util'
 import { omit } from 'es-toolkit'
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref, toRefs } from 'vue'
 import { useBaseConfig } from '../config-provider/context.ts'
 import useCSSVarCls from '../config-provider/hooks/useCSSVarCls'
 import Steps from '../steps'
@@ -84,6 +85,10 @@ const Timeline = defineComponent<
       itemComponent: 'li',
     }))
 
+    const { reverse } = toRefs(props)
+    const orientation = computed(() => props.orientation || 'vertical')
+    useUnstableProvider({ railFollowPrevStatus: reverse as Ref<boolean> })
+
     const { prefixCls, timeline, direction } = useBaseConfig('timeline', props)
     const items = computed(() => props.items)
     const pending = computed(() => props.pending)
@@ -117,9 +122,10 @@ const Timeline = defineComponent<
 
     // ==================== Design ======================
     const layoutAlternate = computed(
-      () =>
-        mergedMode.value === 'alternate'
-        || (props.orientation === 'vertical' && mergedItems.value.some(item => item.title)),
+      () => {
+        return mergedMode.value === 'alternate'
+          || (orientation.value === 'vertical' && mergedItems.value.some(item => item.title))
+      },
     )
 
     const mergedClasses = computed(() => {
@@ -136,7 +142,7 @@ const Timeline = defineComponent<
     })
 
     return () => {
-      const { orientation = 'vertical', variant = 'outlined' } = props
+      const { variant = 'outlined' } = props
 
       return (
         <Steps
@@ -149,7 +155,7 @@ const Timeline = defineComponent<
             hashId.value,
             cssVarCls.value,
             prefixCls.value,
-            { [`${prefixCls.value}-${orientation}`]: orientation === 'horizontal', [`${prefixCls.value}-layout-alternate`]: layoutAlternate.value, [`${prefixCls.value}-rtl`]: direction.value === 'rtl' },
+            { [`${prefixCls.value}-${orientation.value}`]: orientation.value === 'horizontal', [`${prefixCls.value}-layout-alternate`]: layoutAlternate.value, [`${prefixCls.value}-rtl`]: direction.value === 'rtl' },
           )}
           classes={mergedClasses.value}
           style={{
@@ -158,7 +164,7 @@ const Timeline = defineComponent<
           }}
           // Design
           variant={variant}
-          orientation={orientation}
+          orientation={orientation.value}
           // Layout
           type="dot"
           items={mergedItems.value}

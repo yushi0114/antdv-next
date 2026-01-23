@@ -28,6 +28,11 @@ demo:
 <demo src="./demo/custom.vue">自定义时间轴点</demo>
 <demo src="./demo/end.vue">另一侧时间轴点</demo>
 <demo src="./demo/title.vue">标题</demo>
+<demo src="./demo/title-span.vue">标题占比</demo>
+<demo src="./demo/style-class.vue">自定义语义化自定义</demo>
+<demo src="./demo/semantic.vue">语义化结构</demo>
+<demo src="./demo/component-token.vue" debug>自定义组件 Token</demo>
+
 </demo-group>
 
 ## API
