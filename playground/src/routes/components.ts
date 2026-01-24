@@ -55,20 +55,26 @@ function generateCustomDocRoutes() {
 
 export default [
   {
-    path: '/components',
+    path: '/docs',
+    redirect: '/docs/vue/introduce',
     component: () => import('@/layouts/docs/index.vue'),
-    redirect: '/components/overview',
     children: [
-      ...generateCustomDocRoutes(),
-      ...generateDocRoutes(),
+      {
+        path: '/components',
+        redirect: '/components/overview',
+        children: [
+          ...generateCustomDocRoutes(),
+          ...generateDocRoutes(),
+        ],
+      },
+      {
+        path: '/docs/vue',
+        redirect: '/docs/vue/introduce',
+        children: [
+
+        ],
+      },
     ],
   },
-  {
-    path: '/docs/vue',
-    redirect: '/docs/vue/introduce',
-  },
-  {
-    path: '/docs/vue-cn',
-    redirect: '/docs/vue/introduce-cn',
-  },
+
 ] as RouteRecordRaw[]
