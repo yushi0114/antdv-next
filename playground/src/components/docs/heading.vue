@@ -39,7 +39,7 @@ const githubUrl = computed(() => {
       <span>{{ frontmatter?.subtitle }}</span>
       <a-tooltip title="在 GitHub 上编辑此页" destroy-on-hidden>
         <a class="relative top--2px inline-block decoration-none align-mid ml-xs" :href="githubUrl" target="_blank" rel="noopener noreferrer">
-          <EditOutlined class="text-16px c-black/45 block" />
+          <EditOutlined class="text-16px  block" style="color: var(--ant-color-text-tertiary)" />
         </a>
       </a-tooltip>
     </a-space>

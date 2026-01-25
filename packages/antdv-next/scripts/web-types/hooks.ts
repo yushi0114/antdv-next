@@ -1,6 +1,8 @@
 import type { ComponentApiData, MarkdownHookContext, MarkdownHooks } from './types'
 
-export const markdownHooks: MarkdownHooks = {}
+export const markdownHooks: MarkdownHooks = {
+
+}
 
 function applyHook(
   items: ComponentApiData['attributes'],
