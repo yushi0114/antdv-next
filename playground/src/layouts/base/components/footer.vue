@@ -19,7 +19,7 @@
         <div style="opacity: 0.4;">
           Made with <span style="color: rgb(255, 255, 255);">❤</span> by
         </div>
-        <div>Antdv Next team</div>
+        <div>Antdv Next Team</div>
       </div>
     </div>
   </footer>
@@ -31,7 +31,7 @@
   import getAlphaColor from 'antdv-next/theme/util/getAlphaColor'
   import { storeToRefs } from 'pinia'
   import { computed } from 'vue'
-  import { useAppStore } from '@/stores/app' 
+  import { useAppStore } from '@/stores/app'
 
   const { locale } = storeToRefs(useAppStore())
   const { token } = theme.useToken()
@@ -123,7 +123,7 @@
     .footer-bottom {
       text-align: center;
       box-shadow: inset 0 106px 36px -116px rgba(0, 0, 0, 0.14);
-      
+
       .footer-bottom-container {
         width: 100%;
         max-width: 1200px;
