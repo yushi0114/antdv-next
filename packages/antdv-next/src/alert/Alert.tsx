@@ -305,7 +305,7 @@ const Alert = defineComponent<
                   id={props.id}
                   ref={internalRef}
                   data-show={!closed.value}
-                  role={props.role || 'alert'}
+                  role="alert"
                   class={alertCls}
                   style={[
                     mergedStyles.root,
