@@ -78,6 +78,8 @@ describe('alert', () => {
       },
     })
 
+    expect(wrapper.find('.ant-alert-close-icon').exists()).toBe(true)
+
     await wrapper.find('.ant-alert-close-icon').trigger('click')
     expect(onClose).toHaveBeenCalled()
   })
