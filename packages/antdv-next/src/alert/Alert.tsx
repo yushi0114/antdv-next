@@ -288,6 +288,7 @@ const Alert = defineComponent<
         return {}
       }
       const mergedAriaProps = mergedAriaPropsFn()
+
       return (
         <Transition
           name={`${prefixCls.value}-motion`}
@@ -304,7 +305,7 @@ const Alert = defineComponent<
                   id={props.id}
                   ref={internalRef}
                   data-show={!closed.value}
-                  role="alert"
+                  role={props.role || 'alert'}
                   class={alertCls}
                   style={[
                     mergedStyles.root,

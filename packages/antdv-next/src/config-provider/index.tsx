@@ -44,6 +44,7 @@ const PASSED_PROPS: Exclude<
   'form',
   'select',
   'button',
+  'alert',
 ]
 
 const providerDefaultProps: any = {
