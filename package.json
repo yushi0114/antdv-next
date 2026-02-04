@@ -7,6 +7,9 @@
     "type": "git",
     "url": "git+https://github.com/antdv-next/antdv-next.git"
   },
+  "engines": {
+    "node": ">=22.18.0"
+  },
   "scripts": {
     "dev": "turbo dev --filter playground",
     "lint": "eslint . --fix",
