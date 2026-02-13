@@ -168,7 +168,8 @@ const DirectoryTree = defineComponent<
         cachedSelectedKeys.value = newSelectedKeys
         newEvent.selectedNodes = convertDirectoryKeysToNodes(treeData, newSelectedKeys, fieldNames)
       }
-      emit('update:expandedKeys', newSelectedKeys)
+      selectedKeys.value = newSelectedKeys
+      emit('update:selectedKeys', newSelectedKeys)
       emit('select', newSelectedKeys, newEvent)
     }
     const { prefixCls, direction } = useComponentBaseConfig('tree', props)
@@ -188,7 +189,7 @@ const DirectoryTree = defineComponent<
       const { className, style, restAttrs } = getAttrStyleAndClass(attrs)
 
       const connectClassName = clsx(
-        `${prefixCls}-directory`,
+        `${prefixCls.value}-directory`,
         {
           [`${prefixCls.value}-directory-rtl`]: direction.value === 'rtl',
         },
@@ -213,7 +214,7 @@ const DirectoryTree = defineComponent<
         },
         onActiveChange(key) {
           emit('activeChange', key)
-          emit('update:activeKey', key)
+          emit('update:activeKey', key!)
         },
         onDrop(info) {
           emit('drop', info)
@@ -230,9 +231,9 @@ const DirectoryTree = defineComponent<
         onDragover(info) {
           emit('dragover', info)
         },
-        onDoubleClick(e) {
-          emit('doubleClick', e)
-          emit('dblclick', e)
+        onDoubleClick(...args) {
+          emit('doubleClick', ...args)
+          emit('dblclick', ...args)
         },
         onContextmenu(e) {
           emit('contextmenu', e)

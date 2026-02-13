@@ -179,7 +179,6 @@ export interface TableEmits<RecordType = AnyObject> {
   ) => void
   'update:expandedRowKeys': (keys: readonly Key[]) => void
   'scroll': NonNullable<VcTableProps['onScroll']>
-  [key: string]: (...args: any[]) => void
 }
 
 export interface TableSlots<RecordType = AnyObject> {
@@ -231,7 +230,8 @@ const InternalTable = defineComponent<
       bodyCell: contextBodyCell,
       headerCell: contextHeaderCell,
       rowKey: contextRowKey,
-    } = useComponentBaseConfig('table', props, ['bodyCell', 'headerCell', 'rowKey'])
+      scroll: contextScroll,
+    } = useComponentBaseConfig('table', props, ['bodyCell', 'headerCell', 'rowKey', 'scroll'])
 
     const configCtx = useConfig()
 
@@ -314,14 +314,6 @@ const InternalTable = defineComponent<
         '_renderTimes',
       ]),
     )
-
-    const mergedScroll = computed(() => {
-      if (!props.scroll) {
-        return undefined
-      }
-      const { scrollToFirstRowOnChange, ...rest } = props.scroll
-      return rest
-    })
 
     const mergedExpandable = computed(() => {
       const { expandable, ...legacyExpandableProps } = props
@@ -786,6 +778,9 @@ const InternalTable = defineComponent<
       const TableComp = TableComponent.value as any
       const virtualProps = mergedVirtual.value ? { listItemHeight: listItemHeight.value } : {}
 
+      // ============================ Scroll ============================
+      const mergedScroll = props.scroll ?? contextScroll.value
+
       return (
         <div ref={rootRef} class={wrapperCls} style={mergedStyle}>
           <Spin spinning={false} {...(spinProps.value || {})}>
@@ -812,7 +807,7 @@ const InternalTable = defineComponent<
               internalRefs={internalRefs}
               transformColumns={transformColumns as any}
               getContainerWidth={getContainerWidth}
-              scroll={mergedScroll.value as any}
+              scroll={mergedScroll}
               measureRowRender={(measureRow: any) => (
                 <TableMeasureRowContextProvider value={true}>
                   <ConfigProvider getPopupContainer={node => node as HTMLElement}>

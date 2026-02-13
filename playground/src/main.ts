@@ -12,12 +12,9 @@ import InstallDependencies from './components/install-dependencies/index.vue'
 import StackBlitz from './components/stackblitz/index.vue'
 import ComponentTokenTable from './components/token/component-token-table.vue'
 import TokenTable from './components/token/token-table.vue'
-import 'antdv-next/style/reset.css'
-import 'uno.css'
+import './assets/styles/index.css'
 import 'antd.css'
-import './assets/styles/layout/index.css'
-import './assets/styles/markdown/index.css'
-import './assets/styles/common.css'
+import 'uno.css'
 
 const app = createApp(App)
 app.use(router)

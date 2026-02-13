@@ -40,12 +40,13 @@ const RadioGroup = defineComponent<
     const onRadioChange = (e: RadioChangeEvent) => {
       const lastValue = value.value
       const val = e.target.value
-      if (props.value !== undefined) {
-        value.value = val
-      }
       if (val !== lastValue) {
         emit('change', e)
         emit('update:value', val)
+      }
+
+      if (props.value === undefined) {
+        value.value = val
       }
     }
 

@@ -29,7 +29,7 @@ const mockToken = {
 
 describe('style helpers', () => {
   it('generates compact item style buckets', () => {
-    const style = genCompactItemStyle(mockToken)
+    const style = genCompactItemStyle(mockToken) as Record<string, any>
     expect(style['.ant-btn-compact']).toBeTruthy()
   })
 
@@ -39,7 +39,7 @@ describe('style helpers', () => {
       ...getArrowToken(mockToken),
       ...getArrowOffsetToken({ contentRadius: mockToken.borderRadiusOuter }),
     }
-    const style = getArrowStyle(arrowToken as any, '#ffffff')
+    const style = getArrowStyle(arrowToken as any, '#ffffff') as Record<string, any>
     const arrowCls = style[mockToken.componentCls] as Record<string, any>
     expect(arrowCls).toBeTruthy()
 

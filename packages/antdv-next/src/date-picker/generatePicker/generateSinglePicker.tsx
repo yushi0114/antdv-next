@@ -51,7 +51,6 @@ export interface DatePickerEmits<DateType = AnyObject> {
   'focus': (e: FocusEvent, info: any) => void
   'blur': (e: FocusEvent, info: any) => void
   'keydown': (e: KeyboardEvent, preventDefault: VoidFunction) => void
-  [key: string]: (...args: any[]) => void
 }
 
 export interface DatePickerSlots {
@@ -112,7 +111,8 @@ function generatePicker<DateType extends AnyObject = AnyObject>(generateConfig: 
           rootPrefixCls,
           class: contextClassName,
           style: contextStyle,
-        } = useComponentBaseConfig(pickerType as any, props as any, [], 'picker')
+          suffixIcon: contextSuffixIcon,
+        } = useComponentBaseConfig(pickerType as any, props as any, ['suffixIcon'], 'picker')
 
         const { compactSize, compactItemClassnames } = useCompactItemContext(prefixCls, direction)
 
@@ -295,7 +295,7 @@ function generatePicker<DateType extends AnyObject = AnyObject>(generateConfig: 
                 picker: mergedPicker.value,
                 hasFeedback,
                 feedbackIcon,
-                suffixIcon: mergedSuffixIcon,
+                suffixIcon: mergedSuffixIcon === undefined ? contextSuffixIcon?.value : mergedSuffixIcon,
               }}
             />
           )

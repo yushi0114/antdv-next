@@ -8,7 +8,7 @@ import { theme } from 'antdv-next'
 import { createHighlighterCoreSync } from 'shiki/core'
 import { createJavaScriptRegexEngine } from 'shiki/engine/javascript'
 import { computed, ref } from 'vue'
-import { useSemanticLocale } from '@/composables/use-locale'
+import { useLocale } from '@/composables/use-locale'
 import Markers from './markers.vue'
 
 defineOptions({
@@ -21,10 +21,12 @@ const props = withDefaults(defineProps<{
   itemsAPI?: string
   height?: number
   padding?: boolean
+  motion?: boolean
 }>(), {
   componentName: 'Component',
   semantics: () => [],
   padding: true,
+  motion: false,
 })
 
 const shiki = createHighlighterCoreSync({
@@ -39,16 +41,7 @@ export interface SemanticItem {
   version?: string
 }
 
-const locales = {
-  cn: {
-    usage: '使用示例',
-  },
-  en: {
-    usage: 'Usage Example',
-  },
-}
-
-const locale = useSemanticLocale(locales)
+const { t } = useLocale()
 
 const { token } = theme.useToken()
 
@@ -167,7 +160,7 @@ function togglePin(semanticName: string) {
         class="semantic-preview-col"
         :class="{ 'semantic-preview-col-no-padding': !padding }"
       >
-        <a-config-provider :theme="{ token: { motion: false } }">
+        <a-config-provider :theme="{ token: { motion } }">
           <slot :classes="hoveredSemanticClasses" />
         </a-config-provider>
       </a-col>
@@ -203,7 +196,7 @@ function togglePin(semanticName: string) {
                       <PushpinOutlined />
                     </template>
                   </a-button>
-                  <a-popover :title="locale.usage">
+                  <a-popover :title="t('components.semanticPreview.usage')">
                     <template #content>
                       <a-typography :style="{ fontSize: '12px', minWidth: '300px' }">
                         <pre dir="ltr"><code dir="ltr" v-html="generateHighlightCode(semantic.name)" /></pre>

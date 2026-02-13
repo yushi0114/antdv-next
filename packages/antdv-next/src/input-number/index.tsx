@@ -34,6 +34,7 @@ export interface InputNumberSemanticClassNames {
   suffix?: string
   input?: string
   actions?: string
+  action?: string
 }
 
 export interface InputNumberSemanticStyles {
@@ -42,6 +43,7 @@ export interface InputNumberSemanticStyles {
   suffix?: CSSProperties
   input?: CSSProperties
   actions?: CSSProperties
+  action?: CSSProperties
 }
 
 export type InputNumberClassNamesType = SemanticClassNamesType<
@@ -103,7 +105,6 @@ export interface InputNumberEmits {
   'compositionstart': (e: CompositionEvent) => void
   'compositionend': (e: CompositionEvent) => void
   'beforeinput': (e: InputEvent) => void
-  [key: string]: (...args: any[]) => any
 }
 
 export interface InputNumberSlots {

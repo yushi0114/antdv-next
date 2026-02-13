@@ -1,7 +1,7 @@
 {
   "name": "antdv-next",
   "type": "module",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Ant Design Vue3 Component Library",
   "author": {
     "email": "aibayanyu@gamil.com",
@@ -149,7 +149,6 @@
     "@v-c/virtual-list": "catalog:vc",
     "@vueuse/core": "catalog:prod",
     "dayjs": "catalog:prod",
-    "defu": "catalog:prod",
     "es-toolkit": "catalog:prod",
     "scroll-into-view-if-needed": "catalog:prod",
     "throttle-debounce": "catalog:prod"

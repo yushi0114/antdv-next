@@ -60,10 +60,16 @@ export type ColorPickerSemanticName = keyof ColorPickerSemanticClassNames & keyo
 
 export interface ColorPickerSemanticClassNames {
   root?: string
+  body?: string
+  content?: string
+  description?: string
 }
 
 export interface ColorPickerSemanticStyles {
   root?: CSSProperties
+  body?: CSSProperties
+  content?: CSSProperties
+  description?: CSSProperties
 }
 
 export type ColorPickerClassNamesType = SemanticClassNamesType<
@@ -98,7 +104,7 @@ export type ColorPickerProps
     defaultFormat?: ColorFormatType
     allowClear?: boolean
     presets?: PresetsItem[]
-    arrow?: boolean | { pointAtCenter: boolean }
+    arrow?: boolean | { pointAtCenter?: boolean }
     panelRender?: (params: { panel: any, extra: { components: { Picker: any, Presets: any } } }) => any
     showText?: boolean | ((params: { color: AggregationColor }) => any)
     size?: SizeType
@@ -122,7 +128,6 @@ export interface ColorPickerEmits {
   'formatChange': (format?: ColorFormatType) => void
   'update:value': (value: ColorValueType) => void
   'update:format': (format: ColorFormatType) => void
-  [key: string]: (...args: any[]) => void
 }
 
 export interface ColorPickerSlots {

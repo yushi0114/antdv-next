@@ -90,12 +90,14 @@ export interface UploadSemanticClassNames {
   root?: string
   list?: string
   item?: string
+  trigger?: string
 }
 
 export interface UploadSemanticStyles {
   root?: CSSProperties
   list?: CSSProperties
   item?: CSSProperties
+  trigger?: CSSProperties
 }
 
 export type UploadClassNamesType<T = any> = SemanticClassNamesType<
@@ -173,7 +175,6 @@ export interface UploadEmits<T = any> {
   // 'preview': (file: UploadFile<T>) => void
   // 'download': (file: UploadFile<T>) => void
   'update:fileList': (fileList: UploadFile<T>[]) => void
-  [key: string]: (...args: any[]) => void
 }
 
 export interface UploadSlots<T = any> {
@@ -227,7 +228,6 @@ export interface UploadListProps<T = any> {
 }
 
 export interface UploadListEmits {
-  [key: string]: (...args: any[]) => void
 }
 
 export interface UploadListSlots<T = any> {

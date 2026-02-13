@@ -32,3 +32,6 @@ playground/src/assets/token-meta.json
 playground/src/assets/token.json
 playground/public/llms.txt
 playground/public/llms-full.txt
+playground/public/search.cn.json
+playground/public/search.en.json
+coverage

@@ -5,6 +5,7 @@ import type { SizeType } from '../config-provider/SizeContext.tsx'
 import type { ColProps } from '../grid'
 import type { FormContextProps, FormFieldRegister } from './context.tsx'
 import type { FeedbackIcons } from './FormItem'
+import type { FormTooltipProps } from './FormItemLabel.tsx'
 import type { FormLabelAlign, ScrollFocusOptions } from './interface'
 import type {
   FieldData,
@@ -85,6 +86,7 @@ export interface FormProps extends ComponentBaseProps {
   clearOnDestroy?: boolean
   validateOnRuleChange?: boolean
   autoComplete?: string | undefined
+  tooltip?: FormTooltipProps
 }
 
 export interface FormEmits {
@@ -95,7 +97,6 @@ export interface FormEmits {
   validate: (name: InternalNamePath, status: boolean, errors: any[] | null) => void
   valuesChange: (changedValues: Record<string, any>, values: Record<string, any>) => void
   fieldsChange: (changedFields: FieldData[], allFields: FieldData[]) => void
-  [key: string]: (...args: any[]) => void
 }
 
 export interface FormSlots {
@@ -146,7 +147,8 @@ const InternalForm = defineComponent<
       style: contextStyle,
       styles: contextStyles,
       classes: contextClassNames,
-    } = useComponentBaseConfig('form', props, ['scrollToFirstError', 'colon', 'requiredMark'])
+      tooltip: contextTooltip,
+    } = useComponentBaseConfig('form', props, ['scrollToFirstError', 'colon', 'requiredMark', 'tooltip'])
     const {
       size,
       styles,
@@ -184,6 +186,12 @@ const InternalForm = defineComponent<
     })
 
     const mergedColon = computed(() => props.colon ?? contextColon.value)
+    const mergedTooltip = computed(() => {
+      return {
+        ...contextTooltip.value,
+        ...props.tooltip,
+      }
+    })
     const mergedValidateMessages = computed(() => ({
       ...defaultValidateMessages,
       ...(contextValidateMessages?.value || {}),
@@ -374,6 +382,7 @@ const InternalForm = defineComponent<
         rules: rules.value,
         model: model.value,
         validateTrigger: validateTrigger.value,
+        tooltip: mergedTooltip.value,
         validateMessages: mergedValidateMessages.value,
         feedbackIcons: feedbackIcons.value,
         addField,

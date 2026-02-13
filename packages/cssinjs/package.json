@@ -48,7 +48,6 @@
     "@emotion/unitless": "catalog:prod",
     "@v-c/util": "catalog:vc",
     "csstype": "catalog:prod",
-    "defu": "catalog:prod",
     "stylis": "catalog:prod"
   },
   "devDependencies": {

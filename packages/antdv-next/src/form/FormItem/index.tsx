@@ -2,7 +2,7 @@ import type { SlotsType } from 'vue'
 import type { ComponentBaseProps } from '../../config-provider/context'
 import type { FormItemLayout } from '../Form'
 import type { FormItemInputProps } from '../FormItemInput'
-import type { FormItemLabelProps, LabelTooltipType } from '../FormItemLabel'
+import type { FormItemLabelProps } from '../FormItemLabel'
 import type { InternalNamePath, Meta, NamePath, Rule, RuleError, RuleObject, ValidateOptions } from '../types'
 import type { ItemHolderProps } from './ItemHolder.tsx'
 import { clsx } from '@v-c/util'
@@ -56,12 +56,10 @@ export type FormItemProps = BaseFormItemProps
     required?: boolean
     hidden?: boolean
     messageVariables?: Record<string, string>
-    tooltip?: LabelTooltipType
     layout?: FormItemLayout
   }
 
 export interface FormItemEmits {
-  [key: string]: (...args: any[]) => void
 }
 export interface FormItemSlots {
   default: () => any

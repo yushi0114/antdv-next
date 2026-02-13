@@ -50,7 +50,7 @@ export default function virtualAntdCss(
       if (config?.mode !== 'production' && !options.development) {
         return ''
       }
-      return `@import '${cssPath}';`
+      return `@import '${cssPath}' layer(antd);`
     },
   }
 }
