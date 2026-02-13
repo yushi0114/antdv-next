@@ -607,17 +607,14 @@ export function useComponentBaseConfig<
   })
   const toRefs = <TValue>(propValues: Ref<TValue>) => {
     const result: any = {
-      classes: computed(() => EMPTY_OBJECT),
-      styles: computed(() => EMPTY_OBJECT),
-      class: computed(() => undefined),
-      style: computed(() => undefined),
+      classes: computed(() => (propValues.value as any)?.classes ?? EMPTY_OBJECT),
+      styles: computed(() => (propValues.value as any)?.styles ?? EMPTY_OBJECT),
+      class: computed(() => (propValues.value as any)?.class),
+      style: computed(() => (propValues.value as any)?.style),
     }
     const __keys = Object.keys(result)
     for (const key in propValues.value) {
-      if (__keys.includes(key)) {
-        result[key] = computed(() => propValues.value[key] ?? EMPTY_OBJECT)
-      }
-      else {
+      if (!__keys.includes(key)) {
         result[key] = computed(() => propValues.value[key])
       }
     }

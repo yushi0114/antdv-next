@@ -149,7 +149,6 @@
     "@v-c/virtual-list": "catalog:vc",
     "@vueuse/core": "catalog:prod",
     "dayjs": "catalog:prod",
-    "defu": "catalog:prod",
     "es-toolkit": "catalog:prod",
     "scroll-into-view-if-needed": "catalog:prod",
     "throttle-debounce": "catalog:prod"

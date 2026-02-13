@@ -73,4 +73,16 @@ export default {
     hello: '你好,Antdv Next!',
     release: 'Antdv Next 1.0 正式发布!',
   },
+
+  previewThemes: {
+    default: '默认风格',
+    dark: '暗黑风格',
+    geek: '极客风格',
+    glass: '玻璃风格',
+    mui: '类 MUI 风格',
+    shadcn: '类 shadcn 风格',
+    bootstrap: '类 Bootstrap 拟物化风格',
+    cartoon: '卡通风格',
+    illustration: '插画风格',
+  },
 } as const

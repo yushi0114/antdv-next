@@ -222,9 +222,6 @@ catalogs:
     dayjs:
       specifier: ^1.11.19
       version: 1.11.19
-    defu:
-      specifier: ^6.1.4
-      version: 6.1.4
     dom-serializer:
       specifier: ^2.0.0
       version: 2.0.0
@@ -711,9 +708,6 @@ importers:
       dayjs:
         specifier: catalog:prod
         version: 1.11.19
-      defu:
-        specifier: catalog:prod
-        version: 6.1.4
       es-toolkit:
         specifier: catalog:prod
         version: 1.43.0
@@ -748,9 +742,6 @@ importers:
       csstype:
         specifier: catalog:prod
         version: 3.2.3
-      defu:
-        specifier: catalog:prod
-        version: 6.1.4
       stylis:
         specifier: catalog:prod
         version: 4.3.6

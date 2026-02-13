@@ -4,7 +4,6 @@ import type { ConfigConsumerProps, Theme, ThemeConfig } from './context'
 import type { ConfigProviderEmits, ConfigProviderProps, ConfigProviderSlots } from './define'
 import { createTheme, useStyleContext } from '@antdv-next/cssinjs'
 import { IconContextProvider } from '@antdv-next/icons'
-import defu from 'defu'
 import { computed, defineComponent, shallowReactive } from 'vue'
 import { useWarningProvider } from '../_util/warning.ts'
 import { ANT_MARK, LocaleProvider, useLocaleContext } from '../locale'
@@ -48,6 +47,54 @@ const PASSED_PROPS: Exclude<
   'button',
   'alert',
   'transformCellText',
+  'progress',
+  'modal',
+  'switch',
+  'dropdown',
+  'colorPicker',
+  'checkbox',
+  'radio',
+  'tag',
+  'avatar',
+  'badge',
+  'card',
+  'drawer',
+  'empty',
+  'floatButton',
+  'floatButtonGroup',
+  'image',
+  'inputNumber',
+  'layout',
+  'menu',
+  'message',
+  'notification',
+  'popconfirm',
+  'popover',
+  'qrcode',
+  'rangePicker',
+  'rate',
+  'result',
+  'segmented',
+  'skeleton',
+  'slider',
+  'spin',
+  'statistic',
+  'steps',
+  'table',
+  'tabs',
+  'textArea',
+  'timeline',
+  'timePicker',
+  'tooltip',
+  'tour',
+  'tree',
+  'upload',
+  'datePicker',
+  'breadcrumb',
+  'descriptions',
+  'divider',
+  'flex',
+  'typography',
 ]
 
 const providerDefaultProps: any = {
@@ -125,7 +172,6 @@ const ProviderChildren = defineComponent<
     const iconPrefixCls = computed(() => props.iconPrefixCls ?? props?.parentContext?.iconPrefixCls ?? defaultIconPrefixCls)
     const csp = computed(() => props.csp ?? props?.parentContext?.csp)
     useStyle(iconPrefixCls, csp)
-
     const mergedTheme = useTheme(
       theme,
       parentTheme,
@@ -147,7 +193,16 @@ const ProviderChildren = defineComponent<
         locale: props.locale || props.legacyLocale,
         space: props.space,
       } as ConfigConsumerProps
-      const config = defu(parentConfig, baseConfig)
+
+      const config: ConfigConsumerProps = {
+        ...parentConfig,
+      }
+
+      ;(Object.keys(baseConfig) as (keyof typeof baseConfig)[]).forEach((key) => {
+        if (baseConfig[key] !== undefined) {
+          (config as any)[key] = baseConfig[key]
+        }
+      })
       // Pass the props used by `useContext` directly with child component.
       // These props should merged into `config`.
       PASSED_PROPS.forEach((propName) => {
@@ -193,7 +248,6 @@ const ProviderChildren = defineComponent<
         ...defaultSeedToken,
         ...token,
       }
-
       return {
         ...rest,
         theme: themeObj,
@@ -266,7 +320,6 @@ const ConfigProvider = defineComponent<
     return () => {
       const renderEmpty = slots?.renderEmpty ?? props?.renderEmpty
       const transformCellText = slots?.transformCellText ?? props?.transformCellText
-
       return (
         <ProviderChildren
           parentContext={context.value}

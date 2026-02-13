@@ -73,4 +73,16 @@ export default {
     hello: 'Hello, Antdv Next!',
     release: 'Antdv Next 1.0 is released!',
   },
+
+  previewThemes: {
+    default: 'Default Style',
+    dark: 'Dark Style',
+    geek: 'Geek Style',
+    glass: 'Glass Style',
+    mui: 'MUI-like Style',
+    shadcn: 'shadcn-like Style',
+    bootstrap: 'Bootstrap Skeuomorphism',
+    cartoon: 'Cartoon Style',
+    illustration: 'Illustration Style',
+  },
 } as const

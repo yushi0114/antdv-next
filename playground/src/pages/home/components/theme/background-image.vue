@@ -1,37 +1,21 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
-import { COLOR_IMAGES, getClosetColor } from './color-util'
+import { computed } from 'vue'
 
 const props = defineProps<{
-  colorPrimary?: string
+  src?: string | null
   isLight?: boolean
 }>()
 
-const activeColor = computed(() => getClosetColor(props.colorPrimary))
-
-const currentKey = ref<string | null>(activeColor.value)
-
-watch(activeColor, (newColor) => {
-  currentKey.value = newColor
-})
-
-const entity = computed(() => {
-  if (!currentKey.value)
-    return null
-  return COLOR_IMAGES.find(ent => ent.color === currentKey.value)
-})
+const currentSrc = computed(() => props.src)
 </script>
 
 <template>
   <Transition name="antdv-theme-background-image-fade" mode="out-in">
-    <picture v-if="entity && entity.url" :key="currentKey">
-      <source :srcset="entity.webp || undefined" type="image/webp">
-      <source :srcset="entity.url" type="image/jpeg">
+    <picture v-if="currentSrc" :key="currentSrc" class="antdv-theme-background-picture">
       <img
         draggable="false"
         class="antdv-theme-background-image"
-        :style="{ opacity: isLight ? 1 : 0 }"
-        :src="entity.url"
+        :src="currentSrc"
         alt="bg"
       >
     </picture>
@@ -39,6 +23,13 @@ const entity = computed(() => {
 </template>
 
 <style>
+.antdv-theme-background-picture {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
 .antdv-theme-background-image {
   transition: all var(--ant-motion-duration-slow);
   position: absolute;
@@ -48,6 +39,7 @@ const entity = computed(() => {
   width: 100%;
   object-fit: cover;
   object-position: right top;
+  z-index: -1;
 }
 
 .antdv-theme-background-image-fade-enter-active,
